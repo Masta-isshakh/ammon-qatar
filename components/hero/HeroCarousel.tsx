@@ -11,6 +11,17 @@ export interface HeroSlide {
   image: AnyImageKey;
   /** Short line shown with the slide indicator. */
   caption: string;
+  /**
+   * Mirror the photograph in left-to-right layouts from `lg` up, where the
+   * copy sits beside the image: flipping moves the subject into the clear half
+   * of the frame. Only safe for images that contain no text.
+   */
+  mirrorInLtr?: boolean;
+  /**
+   * Which part of the frame to keep when the photograph is cropped on narrow
+   * screens. Wide images lose most of their width on a phone.
+   */
+  focusOnMobile?: 'start' | 'end';
 }
 
 interface HeroCarouselProps {
@@ -95,7 +106,7 @@ export function HeroCarousel({ locale, slides, labels, children }: HeroCarouselP
 
   return (
     <section
-      className="hero-shell relative isolate flex min-h-[38rem] items-center overflow-hidden bg-primary-950 text-white lg:min-h-[44rem]"
+      className="hero-shell relative isolate flex min-h-[32rem] items-center overflow-hidden bg-primary-950 text-white sm:min-h-[36rem] lg:min-h-[40rem]"
       aria-roledescription="carousel"
       aria-label={labels.label}
       onMouseEnter={() => {
@@ -125,6 +136,9 @@ export function HeroCarousel({ locale, slides, labels, children }: HeroCarouselP
               className={cn(
                 'absolute inset-0 transition-opacity duration-[1200ms] ease-[var(--ease-out-quart)] motion-reduce:transition-none',
                 i === index ? 'opacity-100' : 'opacity-0',
+                slide.mirrorInLtr && 'lg:ltr:-scale-x-100',
+                slide.focusOnMobile === 'start' && 'hero-focus-start',
+                slide.focusOnMobile === 'end' && 'hero-focus-end',
               )}
             >
               <SiteImage
@@ -143,11 +157,11 @@ export function HeroCarousel({ locale, slides, labels, children }: HeroCarouselP
       <div aria-hidden className="hero-scrim absolute inset-0 -z-10" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-primary-950 to-transparent" />
 
-      <div className="container-x relative w-full py-20 sm:py-24 lg:py-28">
-        <div className="max-w-2xl">{children}</div>
+      <div className="container-x relative py-14 sm:py-16 lg:py-20">
+        <div className="max-w-xl lg:max-w-3xl">{children}</div>
 
         {slides.length > 1 && (
-          <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
             <span className="flex items-center gap-2">
               {slides.map((slide, i) => (
                 <button

@@ -25,7 +25,8 @@ export function HomeHero({ locale, hero }: HomeHeroProps) {
 
   // The first slide is the default and the LCP image.
   const slides: HeroSlide[] = [
-    { image: 'dohaSkyline', caption: hero.slides.doha },
+    // Mirrored in LTR so the skyline lands in the clear right half of the frame.
+    { image: 'dohaSkyline', caption: hero.slides.doha, mirrorInLtr: true, focusOnMobile: 'start' },
     { image: 'heroMeeting', caption: hero.slides.meeting },
     { image: 'team', caption: hero.slides.team },
   ];
@@ -36,11 +37,11 @@ export function HomeHero({ locale, hero }: HomeHeroProps) {
       <h1 className="mt-5 text-balance text-display font-bold text-white [text-shadow:0_2px_24px_rgb(0_17_47/0.55)] motion-safe:animate-fade-up motion-safe:[animation-delay:80ms]">
         {hero.heading}
       </h1>
-      <GoldLine className="is-in mt-7 w-28 motion-safe:[animation-delay:300ms]" />
-      <p className="mt-7 max-w-xl text-pretty text-lead text-white/85 motion-safe:animate-fade-up motion-safe:[animation-delay:160ms]">
+      <GoldLine className="is-in mt-6 w-28 motion-safe:[animation-delay:300ms]" />
+      <p className="mt-6 max-w-xl text-pretty text-lead text-white/85 motion-safe:animate-fade-up motion-safe:[animation-delay:160ms]">
         {hero.subcopy}
       </p>
-      <div className="mt-9 flex flex-col gap-3 sm:flex-row motion-safe:animate-fade-up motion-safe:[animation-delay:240ms]">
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row motion-safe:animate-fade-up motion-safe:[animation-delay:240ms]">
         <Button asChild variant="gold" size="lg">
           <TrackedLink
             href={localePath(locale, 'contact')}
@@ -55,7 +56,7 @@ export function HomeHero({ locale, hero }: HomeHeroProps) {
           </TrackedLink>
         </Button>
       </div>
-      <p className="mt-8 text-sm font-medium text-gold-300 motion-safe:animate-fade-up motion-safe:[animation-delay:320ms]">
+      <p className="mt-7 text-sm font-medium text-gold-300 motion-safe:animate-fade-up motion-safe:[animation-delay:320ms]">
         {hero.positioning}
       </p>
     </HeroCarousel>

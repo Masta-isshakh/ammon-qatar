@@ -52,7 +52,8 @@ middleware.ts                 edge locale routing (cookie → Accept-Language �
 | Articles | `content/{en,ar}/insights.ts` (same slugs in both locales) |
 | Case studies / testimonials | `content/{en,ar}/evidence.ts` — only with written permission |
 | Photography | drop the file in `public/images/`, run `npm run assets:images`, then point the slot in `content/images.ts` at it |
-| Hero carousel slides | `slides` prop in [components/hero/HomeHero.tsx](components/hero/HomeHero.tsx) — first entry is the default and the LCP image |
+| Hero carousel slides | `slides` array in [components/hero/HomeHero.tsx](components/hero/HomeHero.tsx) — the first entry is the default and the LCP image; each slide takes a `caption`, an optional `mirrorInLtr` and a `focusOnMobile` focal point |
+| Hero slide captions | `hero.slides` in `content/{en,ar}/site.ts` |
 | Logo | drop new artwork in `public/logo/` and run `npm run assets:logo` (see `public/logo/README.md`) |
 
 Both locales share slugs, so the language switcher always lands on the equivalent page.
@@ -71,7 +72,7 @@ Measured locally against the production build (Edge, 1366×800, warm cache):
 What keeps it fast:
 
 - Source photographs are converted once to web-sized JPEGs (18 MB → 2.1 MB) and then served as AVIF/WebP by `next/image`.
-- Only the default hero slide is in the initial payload; the other carousel slides mount when the browser is idle.
+- The hero is a full-bleed background carousel. Only the default slide is in the initial payload; the other slides mount when the browser is idle.
 - English pages load one variable font (24 KB); the Arabic family (69 KB extra) is only requested on `/ar` pages.
 - `priority` is set on exactly one image per page; everything else lazy-loads. Every image has fixed dimensions, so CLS stays near zero.
 - Animations are CSS-only and animate `opacity`/`transform` exclusively; there is no animation library in the bundle.

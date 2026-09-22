@@ -1,7 +1,7 @@
 import { defineBackend } from '@aws-amplify/backend';
-import { Stack } from 'aws-cdk-lib';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
-import { EventSourceMapping, StartingPosition } from 'aws-cdk-lib/aws-lambda';
+import { StartingPosition } from 'aws-cdk-lib/aws-lambda';
+import { DynamoEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
 import { auth } from './auth/resource';
 import { data } from './data/resource';
 import { storage } from './storage/resource';
@@ -20,15 +20,24 @@ backend.auth.resources.cfnResources.cfnIdentityPool.allowUnauthenticatedIdentiti
 
 // ---------------------------------------------------------------------------
 // New lead → DynamoDB stream → notify-lead Lambda → SES email to operations
+//
+// The mapping MUST be attached to the function (its own scope), not created
+// with `Stack.of(leadTable)`. The Lead table lives in its own nested stack;
+// placing the mapping there makes that stack depend on the Lambda, while the
+// Lambda's IAM policy already depends on the table's outputs — CloudFormation
+// then fails with "Circular dependency between resources: [...ServiceRole
+// DefaultPolicy, ...lambda, amplifyDataLeadNestedStack...]".
+// `addEventSource` keeps every reference pointing one way (function → table).
 // ---------------------------------------------------------------------------
 const leadTable = backend.data.resources.tables['Lead'];
 const notifyFn = backend.notifyLead.resources.lambda;
 
-notifyFn.addToRolePolicy(
-  new PolicyStatement({
-    effect: Effect.ALLOW,
-    actions: ['dynamodb:DescribeStream', 'dynamodb:GetRecords', 'dynamodb:GetShardIterator', 'dynamodb:ListStreams'],
-    resources: [`${leadTable.tableArn}/stream/*`],
+notifyFn.addEventSource(
+  new DynamoEventSource(leadTable, {
+    startingPosition: StartingPosition.LATEST,
+    batchSize: 10,
+    retryAttempts: 3,
+    reportBatchItemFailures: true,
   }),
 );
 
@@ -39,15 +48,6 @@ notifyFn.addToRolePolicy(
     resources: ['*'],
   }),
 );
-
-new EventSourceMapping(Stack.of(leadTable), 'NotifyLeadStream', {
-  target: notifyFn,
-  eventSourceArn: leadTable.tableStreamArn,
-  startingPosition: StartingPosition.LATEST,
-  batchSize: 10,
-  retryAttempts: 3,
-  reportBatchItemFailures: true,
-});
 
 backend.addOutput({
   custom: {

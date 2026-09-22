@@ -3,7 +3,15 @@ backend:
   phases:
     build:
       commands:
-        - npm ci --cache .npm --prefer-offline
+        # `npm ci` cannot install this dependency tree: @aws-amplify/data-construct
+        # ships 144 bundled dependencies, including @aws-amplify/plugin-types@1.12.1
+        # which pins @aws-cdk/toolkit-lib@1.19.0, while the hoisted
+        # @aws-amplify/plugin-types@1.13.0 pins 1.32.0. Bundled versions are not
+        # recorded in package-lock.json, so `npm ci` aborts with
+        # "Missing: @aws-cdk/toolkit-lib@1.19.0 from lock file".
+        # `npm install` resolves the same tree correctly and still honours the
+        # committed lockfile. Revert to `npm ci` once Amplify aligns these pins.
+        - npm install --cache .npm --prefer-offline --no-audit --no-fund
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:

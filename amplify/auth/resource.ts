@@ -1,11 +1,15 @@
-import { defineAuth } from "@aws-amplify/backend";
+import { defineAuth } from '@aws-amplify/backend';
 
 /**
- * Define and configure your auth resource
- * @see https://docs.amplify.aws/gen2/build-a-backend/auth
+ * Staff sign in with email (operations dashboard / CRM access).
+ * Website visitors never sign in — they use the identity pool's guest role,
+ * which is enabled in amplify/backend.ts.
  */
 export const auth = defineAuth({
   loginWith: {
     email: true,
+  },
+  userAttributes: {
+    preferredUsername: { mutable: true, required: false },
   },
 });

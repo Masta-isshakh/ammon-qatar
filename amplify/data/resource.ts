@@ -1,17 +1,50 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any user authenticated via an API key can "create", "read",
-"update", and "delete" any "Todo" records.
-=========================================================================*/
+/**
+ * Ammon Qatar lead capture.
+ *
+ * Access model (least privilege):
+ * - Public API key: `create` on Lead only. It cannot list, read, update or
+ *   delete leads, and the staff-only fields below reject public writes.
+ * - Authenticated staff (Cognito user pool): full access for the ops CRM.
+ *
+ * The website writes leads from a Next.js server action (never from the
+ * browser), after server-side validation, honeypot and rate limiting.
+ */
 const schema = a.schema({
-  Todo: a
+  LeadStatus: a.enum(['NEW', 'CONTACTED', 'QUALIFIED', 'ENGAGED', 'CLOSED', 'SPAM']),
+
+  Lead: a
     .model({
-      content: a.string(),
+      reference: a.string().required(),
+      locale: a.string().required(),
+      name: a.string().required(),
+      companyType: a.string().required(),
+      companyName: a.string(),
+      phone: a.string().required(),
+      email: a.string().required(),
+      debtCategory: a.string().required(),
+      amountRange: a.string().required(),
+      debtAge: a.string().required(),
+      preferredContact: a.string().required(),
+      message: a.string(),
+      sourcePage: a.string(),
+      utmSource: a.string(),
+      utmMedium: a.string(),
+      utmCampaign: a.string(),
+      status: a.ref('LeadStatus'),
+      consentTimestamp: a.datetime().required(),
+      submittedAt: a.datetime().required(),
+      // ---- Staff-only fields: not readable or writable with the public key ----
+      assignedTo: a.string().authorization((allow) => [allow.authenticated()]),
+      internalNotes: a.string().authorization((allow) => [allow.authenticated()]),
+      contactedAt: a.datetime().authorization((allow) => [allow.authenticated()]),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .secondaryIndexes((index) => [
+      index('status').sortKeys(['submittedAt']).queryField('leadsByStatus'),
+      index('reference').queryField('leadByReference'),
+    ])
+    .authorization((allow) => [allow.publicApiKey().to(['create']), allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,38 +52,10 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
+    defaultAuthorizationMode: 'apiKey',
     apiKeyAuthorizationMode: {
-      expiresInDays: 30,
+      // Rotated by redeploying; the key only permits creating leads.
+      expiresInDays: 365,
     },
   },
 });
-
-/*== STEP 2 ===============================================================
-Go to your frontend source code. From your client-side code, generate a
-Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
-WORK IN THE FRONTEND CODE FILE.)
-
-Using JavaScript or Next.js React Server Components, Middleware, Server 
-Actions or Pages Router? Review how to generate Data clients for those use
-cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
-=========================================================================*/
-
-/*
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
-*/
-
-/*== STEP 3 ===============================================================
-Fetch records from the database and use them in your frontend component.
-(THIS SNIPPET WILL ONLY WORK IN THE FRONTEND CODE FILE.)
-=========================================================================*/
-
-/* For example, in a React component, you can use this snippet in your
-  function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
-
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>

@@ -15,7 +15,7 @@ export function Confidentiality({ locale, copy }: ConfidentialityProps) {
       <div className="container-x grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal className="relative order-last lg:order-first">
           <div className="overflow-hidden rounded-3xl border border-line shadow-card">
-            <SiteImage image="secureDocuments" locale={locale} className="aspect-[16/11] object-cover" loading="lazy" />
+            <SiteImage image="confidentialFile" locale={locale} className="aspect-[4/3] object-cover" loading="lazy" />
           </div>
           {/* Secure-document visual: a layered file card rather than a padlock cliché. */}
           <div aria-hidden className="absolute -bottom-6 -end-4 hidden w-56 rounded-2xl border border-line bg-white p-4 shadow-card-hover sm:block">

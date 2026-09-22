@@ -1,37 +1,39 @@
 @import 'tailwindcss';
 
 /* ------------------------------------------------------------------ */
-/*  Ammon Qatar design tokens — maroon / gold / cream                     */
+/*  Ammon Qatar design tokens — brand royal blue / gold / ivory                     */
 /* ------------------------------------------------------------------ */
 @theme {
-  /* Deep oxblood primary — warm, premium, pairs with brass and marble */
-  --color-primary-950: #2b0d15;
-  --color-primary-900: #4a1622;
-  --color-primary-800: #62202e;
-  --color-primary-700: #7d2b3c;
-  --color-primary-600: #9a3b4d;
-  --color-primary-500: #b55766;
-  --color-primary-100: #f0dcdf;
-  --color-sage: #f8f0ee;
-  --color-gold-600: #a6851c;
-  --color-gold-500: #c9a227;
-  --color-gold-400: #d9b85a;
-  --color-gold-300: #e8d394;
-  --color-gold-100: #f6eed3;
+  /*  */
+  /* Brand royal blue, sampled from the official Ammon Qatar logo */
+  --color-primary-950: #00112f;
+  --color-primary-900: #001c55;
+  --color-primary-800: #002667;
+  --color-primary-700: #003887;
+  --color-primary-600: #0b4aa5;
+  --color-primary-500: #2f6ccc;
+  --color-primary-100: #dbe5f5;
+  --color-sage: #eef2f9;
+  /* Brand gold, sampled from the logo arrow */
+  --color-gold-600: #8a5a12;
+  --color-gold-500: #b8862b;
+  --color-gold-400: #d3a852;
+  --color-gold-300: #e6c886;
+  --color-gold-100: #f7edd8;
 
-  --color-ivory: #faf7f0;
-  --color-ivory-deep: #f1ece0;
-  --color-ink: #1d1518;
-  --color-slate-muted: #6a5b5e;
-  --color-line: #e2ddd0;
+  --color-ivory: #f9f8f5;
+  --color-ivory-deep: #edeef1;
+  --color-ink: #10182a;
+  --color-slate-muted: #5a6478;
+  --color-line: #dfe3ea;
   --color-line-dark: rgb(255 255 255 / 0.12);
   --color-whatsapp: #25d366;
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-arabic: var(--font-plex-arabic), var(--font-manrope), 'Segoe UI', Tahoma, system-ui, sans-serif;
 
-  --shadow-card: 0 1px 2px rgb(29 21 24 / 0.04), 0 12px 32px -16px rgb(74 22 34 / 0.18);
-  --shadow-card-hover: 0 2px 4px rgb(29 21 24 / 0.05), 0 26px 50px -20px rgb(74 22 34 / 0.3);
+  --shadow-card: 0 1px 2px rgb(16 24 42 / 0.04), 0 12px 32px -16px rgb(0 28 85 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(16 24 42 / 0.05), 0 26px 50px -20px rgb(0 28 85 / 0.3);
   --shadow-gold: 0 8px 24px -10px rgb(201 162 39 / 0.55);
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -216,8 +218,8 @@ html[dir='rtl'] .eyebrow {
 
 @utility bg-primary-gradient {
   background-image:
-    radial-gradient(90% 70% at 100% 0%, rgb(201 162 39 / 0.22) 0%, transparent 60%),
-    radial-gradient(70% 60% at 0% 100%, rgb(154 59 77 / 0.3) 0%, transparent 60%),
+    radial-gradient(90% 70% at 100% 0%, rgb(184 134 43 / 0.25) 0%, transparent 60%),
+    radial-gradient(70% 60% at 0% 100%, rgb(0 56 135 / 0.45) 0%, transparent 60%),
     linear-gradient(135deg, var(--color-primary-950) 0%, var(--color-primary-900) 55%, var(--color-primary-800) 100%);
 }
 

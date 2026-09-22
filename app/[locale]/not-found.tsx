@@ -14,10 +14,15 @@ export default async function NotFound() {
 
   return (
     <section dir={meta.dir} lang={meta.hreflang} className="container-x flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-      {/* Next renders notFound() without the layout's <html> attributes; restore lang/dir/font classes. */}
+      {/*
+        A notFound() thrown from the dynamic catch-all is streamed after the
+        shell, so React fills in this boundary on the client and the <html>
+        attributes from the layout are not applied. This restores lang, dir and
+        the font classes. The response status is a correct 404 either way.
+      */}
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(d){d.lang=${JSON.stringify(meta.hreflang)};d.dir=${JSON.stringify(meta.dir)};d.className=${JSON.stringify(`js ${fontClassName}`)}})(document.documentElement)`,
+          __html: `(function(d){d.lang=${JSON.stringify(meta.hreflang)};d.dir=${JSON.stringify(meta.dir)};d.className=${JSON.stringify(`js ${fontClassName(locale)}`)}})(document.documentElement)`,
         }}
       />
       <p className="text-6xl font-bold text-gold-500" dir="ltr">404</p>

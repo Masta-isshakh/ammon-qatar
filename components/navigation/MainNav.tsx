@@ -98,13 +98,24 @@ export function MainNav({ locale, links, labels, whatsappHref, phoneHref }: Main
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-white/10 text-white transition-[background-color,box-shadow,height] duration-300',
-        scrolled || open ? 'bg-primary-950/95 shadow-[0_8px_30px_-16px_rgb(43_13_21/0.8)] backdrop-blur-md' : 'bg-primary-950',
+        // Light header: the brand logo is royal blue on white, so it needs a light surface to read correctly.
+        'sticky top-0 z-50 border-b transition-[background-color,box-shadow,height,border-color] duration-300',
+        scrolled || open
+          ? 'border-line bg-white/95 shadow-[0_6px_24px_-14px_rgb(0_28_85/0.35)] backdrop-blur-md'
+          : 'border-transparent bg-white',
       )}
     >
       <nav className="container-x flex items-center justify-between gap-4" aria-label="Primary" style={{ height: scrolled ? '4rem' : 'var(--header-h)' }}>
         <Link href={localePath(locale)} className="flex shrink-0 items-center" aria-label={labels.home}>
-          <Image src="/logo/ammon-dark.svg" alt="" width={260} height={64} priority className="h-10 w-auto sm:h-11" />
+          <Image
+            src="/logo/ammon-qatar-logo-wide.png"
+            alt=""
+            width={939}
+            height={220}
+            priority
+            sizes="(min-width: 640px) 180px, 160px"
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <ul className="hidden items-center gap-1 xl:flex">
@@ -114,24 +125,24 @@ export function MainNav({ locale, links, labels, whatsappHref, phoneHref }: Main
                 href={l.href}
                 aria-current={isActive(l.href) ? 'page' : undefined}
                 className={cn(
-                  'inline-flex min-h-11 items-center rounded-full px-3.5 text-[0.9375rem] font-medium text-white/80 transition-colors hover:bg-white/8 hover:text-white',
-                  isActive(l.href) && 'text-white after:content-[""]',
+                  'inline-flex min-h-11 items-center rounded-full px-3.5 text-[0.9375rem] font-medium text-primary-900/75 transition-colors hover:bg-primary-900/5 hover:text-primary-900',
+                  isActive(l.href) && 'text-primary-900',
                 )}
               >
-                <span className={cn('border-b-2 border-transparent pb-0.5', isActive(l.href) && 'border-gold-400')}>{l.label}</span>
+                <span className={cn('border-b-2 border-transparent pb-0.5', isActive(l.href) && 'border-gold-500')}>{l.label}</span>
               </Link>
             </li>
           ))}
         </ul>
 
         <div className="hidden items-center gap-2 xl:flex">
-          <LanguageSwitcher locale={locale} label={labels.switchLocale} ariaLabel={labels.switchLocaleLabel} tone="light" />
-          <Button asChild variant="ghostLight" size="icon" aria-label={labels.whatsappLabel}>
+          <LanguageSwitcher locale={locale} label={labels.switchLocale} ariaLabel={labels.switchLocaleLabel} tone="dark" />
+          <Button asChild variant="ghost" size="icon" aria-label={labels.whatsappLabel}>
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer" onClick={() => track({ event: 'whatsapp_click', location: 'header' })}>
               <MessageCircle />
             </a>
           </Button>
-          <Button asChild variant="gold" size="md">
+          <Button asChild variant="primary" size="md">
             <Link href={localePath(locale, 'contact')} onClick={() => track({ event: 'cta_click', cta_id: 'header_assessment', location: 'header' })}>
               {labels.cta}
             </Link>
@@ -139,10 +150,10 @@ export function MainNav({ locale, links, labels, whatsappHref, phoneHref }: Main
         </div>
 
         <div className="flex items-center gap-1 xl:hidden">
-          <LanguageSwitcher locale={locale} label={labels.switchLocale} ariaLabel={labels.switchLocaleLabel} tone="light" />
+          <LanguageSwitcher locale={locale} label={labels.switchLocale} ariaLabel={labels.switchLocaleLabel} tone="dark" />
           <Button
             ref={toggleRef}
-            variant="ghostLight"
+            variant="ghost"
             size="icon"
             aria-expanded={open}
             aria-controls={menuId}
@@ -161,7 +172,7 @@ export function MainNav({ locale, links, labels, whatsappHref, phoneHref }: Main
           role="dialog"
           aria-modal="true"
           aria-label={labels.menu}
-          className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-primary-950 xl:hidden"
+          className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-primary-900 xl:hidden"
         >
           <div className="container-x flex flex-col gap-1 py-4">
             {links.map((l) => (

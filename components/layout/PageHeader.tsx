@@ -1,5 +1,8 @@
 import { Breadcrumbs, type Crumb } from '@/components/layout/Breadcrumbs';
 import { ShieldMotif } from '@/components/ui/BrandMotif';
+import { SiteImage } from '@/components/ui/SiteImage';
+import type { AnyImageKey } from '@/content/images';
+import type { Locale } from '@/lib/i18n/config';
 import { cn } from '@/lib/utils';
 
 interface PageHeaderProps {
@@ -10,21 +13,34 @@ interface PageHeaderProps {
   crumbsLabel: string;
   children?: React.ReactNode;
   className?: string;
+  /** Optional supporting photograph shown beside the heading on large screens. */
+  image?: AnyImageKey;
+  locale?: Locale;
 }
 
 /** Navy page band used by every inner page: breadcrumb → eyebrow → H1 → intro (+ optional actions). */
-export function PageHeader({ eyebrow, heading, intro, crumbs, crumbsLabel, children, className }: PageHeaderProps) {
+export function PageHeader({ eyebrow, heading, intro, crumbs, crumbsLabel, children, className, image, locale }: PageHeaderProps) {
   return (
     <section className={cn('relative overflow-hidden bg-primary-gradient text-white', className)}>
-      <ShieldMotif className="pointer-events-none absolute -end-10 top-1/2 hidden h-[130%] -translate-y-1/2 opacity-60 lg:block" />
+      {!image && <ShieldMotif className="pointer-events-none absolute -end-10 top-1/2 hidden h-[130%] -translate-y-1/2 opacity-60 lg:block" />}
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-500/60 to-transparent" />
       <div className="container-x relative py-12 sm:py-16 lg:py-20">
         <Breadcrumbs items={crumbs} ariaLabel={crumbsLabel} className="mb-6" />
-        <div className="max-w-4xl">
-          {eyebrow && <p className="eyebrow eyebrow-light">{eyebrow}</p>}
-          <h1 className="mt-4 text-balance text-h1 font-bold text-white">{heading}</h1>
-          {intro && <p className="mt-5 text-pretty text-lead text-white/75">{intro}</p>}
-          {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
+        <div className={cn(image && locale ? 'grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]' : '')}>
+          <div className="max-w-4xl">
+            {eyebrow && <p className="eyebrow eyebrow-light">{eyebrow}</p>}
+            <h1 className="mt-4 text-balance text-h1 font-bold text-white">{heading}</h1>
+            {intro && <p className="mt-5 text-pretty text-lead text-white/75">{intro}</p>}
+            {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
+          </div>
+          {image && locale && (
+            <figure className="relative hidden lg:block">
+              <div aria-hidden className="absolute -inset-2.5 rounded-[1.5rem] border border-gold-500/30" />
+              <div className="relative overflow-hidden rounded-2xl shadow-[0_24px_50px_-28px_rgb(0_17_47/0.9)]">
+                <SiteImage image={image} locale={locale} priority className="aspect-[16/10] object-cover" />
+              </div>
+            </figure>
+          )}
         </div>
       </div>
     </section>

@@ -44,7 +44,7 @@ export default async function DohaPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd id="ld-doha" data={schema} />
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.doha }]} crumbsLabel={site.common.breadcrumb} />
+      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.doha }]} crumbsLabel={site.common.breadcrumb} image="dohaSkyline" locale={locale} />
 
       <section className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
         <Reveal>

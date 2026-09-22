@@ -44,7 +44,7 @@ export default async function ContactPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd id="ld-contact" data={schema} />
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.contact }]} crumbsLabel={site.common.breadcrumb} />
+      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.contact }]} crumbsLabel={site.common.breadcrumb} image="contactReception" locale={locale} />
 
       <section className="container-x -mt-6 pb-2 pt-10 sm:pt-12" aria-labelledby="direct-heading">
         <h2 id="direct-heading" className="sr-only">{page.directHeading}</h2>

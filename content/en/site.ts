@@ -43,6 +43,12 @@ export const site = {
     positioning: 'Recover What You’re Owed — Professionally, Confidentially, and With a Clear Strategy.',
     imageAlt: 'Business professionals reviewing financial documents in a Doha office with the city skyline behind them',
     imageCaption: 'Structured, discreet recovery — managed from Doha.',
+    carousel: {
+      label: 'Ammon Qatar in Doha',
+      slide: 'Show image {n} of {total}',
+      pause: 'Pause image rotation',
+      play: 'Resume image rotation',
+    },
   },
   trust: {
     heading: 'How we work',

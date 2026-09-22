@@ -8,7 +8,7 @@ interface UtilityBarProps {
 
 export function UtilityBar({ tagline, hoursLabel }: UtilityBarProps) {
   return (
-    <div className="hidden bg-[#1c0a10] text-[0.8125rem] text-white/70 md:block">
+    <div className="hidden bg-[#000d24] text-[0.8125rem] text-white/70 md:block">
       <div className="container-x flex h-[var(--utility-h)] items-center justify-between gap-6">
         <p className="truncate">{tagline}</p>
         <ul className="flex items-center gap-5">

@@ -51,25 +51,25 @@ function Card({ locale, heading, positioning, fontFamily }: { locale: Locale; he
         justifyContent: 'space-between',
         alignItems: ar ? 'flex-end' : 'flex-start',
         padding: 72,
-        background: 'linear-gradient(135deg, #2b0d15 0%, #4a1622 60%, #62202e 100%)',
+        background: 'linear-gradient(135deg, #00112f 0%, #001c55 60%, #002667 100%)',
         color: '#ffffff',
         fontFamily,
       }}
     >
       <div style={{ display: 'flex', flexDirection: ar ? 'row-reverse' : 'row', alignItems: 'center', gap: 18 }}>
         <svg viewBox="0 0 64 64" width="64" height="64">
-          <path d="M32 8 L52 17 V36 C52 47 43 55 32 59 C21 55 12 47 12 36 V17 Z" fill="none" stroke="#c9a227" strokeWidth="2" />
-          <path d="M32 20 L41 42 H36.5 L32 30.5 L27.5 42 H23 Z" fill="#d9b85a" />
+          <path d="M32 8 L52 17 V36 C52 47 43 55 32 59 C21 55 12 47 12 36 V17 Z" fill="none" stroke="#b8862b" strokeWidth="2" />
+          <path d="M32 20 L41 42 H36.5 L32 30.5 L27.5 42 H23 Z" fill="#d3a852" />
         </svg>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: ar ? 'flex-end' : 'flex-start' }}>
           <div style={{ fontSize: 30, fontWeight: 700, letterSpacing: 5 }}>AMMON</div>
-          <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 8, color: '#d9b85a' }}>QATAR</div>
+          <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 8, color: '#d3a852' }}>QATAR</div>
         </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: ar ? 'flex-end' : 'flex-start', gap: 22, maxWidth: 1000 }}>
-        <div style={{ display: 'flex', width: 96, height: 4, background: '#c9a227', borderRadius: 4 }} />
+        <div style={{ display: 'flex', width: 96, height: 4, background: '#b8862b', borderRadius: 4 }} />
         <div style={{ display: 'flex', direction: 'ltr', fontSize: 52, fontWeight: 700, lineHeight: 1.15, textAlign: ar ? 'right' : 'left' }}>{visualOrder(heading, locale)}</div>
-        <div style={{ display: 'flex', direction: 'ltr', fontSize: 26, color: '#d9b85a', lineHeight: 1.4 }}>{visualOrder(positioning, locale)}</div>
+        <div style={{ display: 'flex', direction: 'ltr', fontSize: 26, color: '#d3a852', lineHeight: 1.4 }}>{visualOrder(positioning, locale)}</div>
       </div>
       <div style={{ display: 'flex', fontSize: 20, color: 'rgba(255,255,255,0.6)' }}>{COMPANY.legalNameEn} · Doha, Qatar</div>
     </div>

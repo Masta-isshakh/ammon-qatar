@@ -18,7 +18,7 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#4a1622',
+  themeColor: '#001c55',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
@@ -54,7 +54,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   );
 
   return (
-    <html lang={meta.hreflang} dir={meta.dir} className={`js ${fontClassName}`}>
+    <html lang={meta.hreflang} dir={meta.dir} className={`js ${fontClassName(locale)}`}>
       <head>
         {/* Without JS the noscript rules override the pre-reveal states, so content is never hidden. */}
         <noscript>

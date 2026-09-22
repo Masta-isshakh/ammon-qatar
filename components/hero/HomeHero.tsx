@@ -1,6 +1,6 @@
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { SiteImage } from '@/components/ui/SiteImage';
+import { HeroCarousel } from '@/components/hero/HeroCarousel';
 import { GoldLine, ShieldMotif } from '@/components/ui/BrandMotif';
 import { TrackedLink } from '@/components/navigation/TrackedLink';
 import type { LocaleContent } from '@/content';
@@ -52,14 +52,15 @@ export function HomeHero({ locale, hero }: HomeHeroProps) {
           <p className="mt-8 text-sm font-medium text-gold-300/90 motion-safe:animate-fade-up motion-safe:[animation-delay:320ms]">{hero.positioning}</p>
         </div>
 
-        <figure className="relative motion-safe:animate-fade-up motion-safe:[animation-delay:200ms]">
-          <div className="absolute -inset-3 rounded-[1.75rem] border border-gold-500/30" aria-hidden />
-          <div className="relative overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(43_13_21/0.9)]">
-            <SiteImage image="heroMeeting" locale={locale} alt={hero.imageAlt} className="aspect-[4/3] object-cover lg:aspect-[16/11]" />
-            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-primary-950/70 via-transparent to-transparent" />
-          </div>
-          <figcaption className="absolute bottom-5 start-5 end-5 text-sm font-medium text-white/90">{hero.imageCaption}</figcaption>
-        </figure>
+        <div className="motion-safe:animate-fade-up motion-safe:[animation-delay:200ms]">
+          {/* First slide is the LCP image; the rest cross-fade behind it. */}
+          <HeroCarousel
+            locale={locale}
+            slides={['dohaSkyline', 'heroMeeting', 'team']}
+            caption={hero.imageCaption}
+            labels={hero.carousel}
+          />
+        </div>
       </div>
     </section>
   );

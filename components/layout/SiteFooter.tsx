@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/navigation/LanguageSwitcher';
 import type { LocaleContent } from '@/content';
-import { COMPANY, FLAGS, formatPhoneDisplay, mapsLink } from '@/lib/constants/company';
+import { COMPANY, FLAGS, formatAddress, formatPhoneDisplay, mapsLink } from '@/lib/constants/company';
 import { localePath, type Locale } from '@/lib/i18n/config';
 
 interface SiteFooterProps {
@@ -16,6 +16,7 @@ export function SiteFooter({ locale, content }: SiteFooterProps) {
   const f = site.footer;
   const year = new Date().getFullYear();
   const isArabic = locale === 'ar';
+  const SOCIAL_LABELS: Record<string, string> = { instagram: 'Instagram', facebook: 'Facebook', linkedin: 'LinkedIn' };
   const socials = Object.entries(COMPANY.social).filter(([, url]) => url);
 
   const companyLinks = [
@@ -34,7 +35,7 @@ export function SiteFooter({ locale, content }: SiteFooterProps) {
       <div className="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.3fr] lg:gap-8">
         <div>
           <Link href={localePath(locale)} aria-label={site.nav.home} className="inline-block">
-            <Image src="/logo/ammon-dark.svg" alt="" width={260} height={64} className="h-12 w-auto" />
+            <Image src="/logo/ammon-qatar-plate.png" alt="" width={320} height={320} sizes="64px" className="size-16 rounded-2xl" />
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-relaxed">{f.positioning}</p>
           <p className="mt-4 text-xs text-white/50">{isArabic ? COMPANY.legalNameAr : COMPANY.legalNameEn}</p>
@@ -98,9 +99,11 @@ export function SiteFooter({ locale, content }: SiteFooterProps) {
             <p className="flex items-start gap-2.5">
               <MapPin className="mt-0.5 size-4 shrink-0 text-gold-400" aria-hidden />
               <a href={mapsLink()} target="_blank" rel="noopener noreferrer" className="hover:text-gold-300">
-                {COMPANY.address.streetAddress}
-                <br />
-                {isArabic ? 'الدوحة، قطر' : 'Doha, Qatar'}
+                {formatAddress(locale).map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </a>
             </p>
             <p className="flex items-center gap-2.5">
@@ -127,7 +130,7 @@ export function SiteFooter({ locale, content }: SiteFooterProps) {
               {socials.map(([name, url]) => (
                 <li key={name}>
                   <a href={url} target="_blank" rel="noopener noreferrer" className="hover:text-gold-300">
-                    {name}
+                    {SOCIAL_LABELS[name] ?? name}
                   </a>
                 </li>
               ))}

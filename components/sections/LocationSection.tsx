@@ -4,7 +4,7 @@ import { Reveal } from '@/components/ui/Reveal';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SiteImage } from '@/components/ui/SiteImage';
 import type { LocaleContent } from '@/content';
-import { COMPANY, FLAGS, formatPhoneDisplay, mapsLink } from '@/lib/constants/company';
+import { COMPANY, FLAGS, formatAddress, formatPhoneDisplay, mapsLink } from '@/lib/constants/company';
 import { localePath, type Locale } from '@/lib/i18n/config';
 
 interface LocationSectionProps {
@@ -15,14 +15,13 @@ interface LocationSectionProps {
 
 /** Doha entity block. All NAP values come from lib/constants/company.ts — keep them consistent with Google Business Profile. */
 export function LocationSection({ locale, copy, withImage = true }: LocationSectionProps) {
-  const isArabic = locale === 'ar';
   const rows = [
     {
       icon: MapPin,
       label: copy.address,
       value: (
         <a href={mapsLink()} target="_blank" rel="noopener noreferrer" className="hover:text-gold-600">
-          {COMPANY.address.streetAddress}, {isArabic ? 'الدوحة، قطر' : 'Doha, Qatar'}
+          {formatAddress(locale).join(' · ')}
         </a>
       ),
     },

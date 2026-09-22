@@ -22,11 +22,11 @@ export const COMPANY = {
   legalNameAr: env('NEXT_PUBLIC_LEGAL_NAME_AR', 'عمون قطر لخدمات التحصيل ذ.م.م.'),
   /** TODO(owner): Commercial Registration number — rendered only when set. */
   crNumber: env('NEXT_PUBLIC_CR_NUMBER', ''),
-  /** TODO(owner): verified +974 landline/mobile in E.164, e.g. +97444001234 */
-  phoneE164: env('NEXT_PUBLIC_PHONE_E164', '+97400000000'),
-  /** TODO(owner): WhatsApp Business number, digits only, e.g. 97455001234 */
-  whatsappNumber: env('NEXT_PUBLIC_WHATSAPP_NUMBER', '97400000000').replace(/\D/g, ''),
-  /** TODO(owner): verified business email. */
+  /** Verified business number (also used for WhatsApp unless overridden). */
+  phoneE164: env('NEXT_PUBLIC_PHONE_E164', '+97466685108'),
+  /** WhatsApp Business number, digits only. */
+  whatsappNumber: env('NEXT_PUBLIC_WHATSAPP_NUMBER', '97466685108').replace(/\D/g, ''),
+  /** Verified business email. */
   email: env('NEXT_PUBLIC_EMAIL', 'info@ammonqatar.com'),
   address: {
     /** TODO(owner): street / building / zone as registered. */
@@ -47,11 +47,16 @@ export const COMPANY = {
     opens: env('NEXT_PUBLIC_HOURS_OPEN', '08:00'),
     closes: env('NEXT_PUBLIC_HOURS_CLOSE', '17:00'),
   },
-  /** Social profiles render only when a URL is provided. TODO(owner). */
+  /**
+   * Social profiles. Each renders only when a URL is set, so the Facebook
+   * link stays hidden until the page exists.
+   * TODO(owner): create facebook.com/ammonqatar.qa (handle matches Instagram),
+   * then set NEXT_PUBLIC_SOCIAL_FACEBOOK. LinkedIn is still to be created.
+   */
   social: {
+    instagram: env('NEXT_PUBLIC_SOCIAL_INSTAGRAM', 'https://www.instagram.com/ammonqatar.qa'),
+    facebook: env('NEXT_PUBLIC_SOCIAL_FACEBOOK', ''),
     linkedin: env('NEXT_PUBLIC_SOCIAL_LINKEDIN', ''),
-    instagram: env('NEXT_PUBLIC_SOCIAL_INSTAGRAM', ''),
-    x: env('NEXT_PUBLIC_SOCIAL_X', ''),
   },
   foundingYear: env('NEXT_PUBLIC_FOUNDING_YEAR', ''),
 } as const;
@@ -85,11 +90,22 @@ export function formatPhoneDisplay(e164: string = COMPANY.phoneE164) {
   return e164;
 }
 
-export const isPhoneConfigured = COMPANY.phoneE164 !== '+97400000000';
-export const isWhatsAppConfigured = COMPANY.whatsappNumber !== '97400000000';
-
 export function whatsappLink(message: string) {
   return `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Full postal address for display. Avoids repeating the city when the
+ * configured street address already contains it.
+ */
+export function formatAddress(locale: 'en' | 'ar') {
+  const city = locale === 'ar' ? 'الدوحة، قطر' : 'Doha, Qatar';
+  const street = COMPANY.address.streetAddress.trim();
+  const normalised = street.toLowerCase().replace(/[\s,،]/g, '');
+  if (!street || normalised === city.toLowerCase().replace(/[\s,،]/g, '') || normalised === 'doha' || normalised === 'dohaqatar') {
+    return [city];
+  }
+  return [street, city];
 }
 
 export function mapsLink() {

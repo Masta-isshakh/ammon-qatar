@@ -13,6 +13,7 @@ import { CTABand } from '@/components/sections/CTABand';
 import { TrackedLink } from '@/components/navigation/TrackedLink';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getContent } from '@/content';
+import { SERVICE_IMAGES } from '@/content/images';
 import { whatsappLink } from '@/lib/constants/company';
 import { LOCALES, isLocale, localePath, type Locale } from '@/lib/i18n/config';
 import { buildMetadata } from '@/lib/seo/metadata';
@@ -68,6 +69,8 @@ export default async function ServicePage({ params }: { params: Params }) {
         intro={service.hero.intro}
         crumbs={[{ href: `/${locale}`, label: site.common.home }, { href: localePath(locale, 'services'), label: site.nav.services }, { label: service.name }]}
         crumbsLabel={site.common.breadcrumb}
+        image={SERVICE_IMAGES[service.slug]}
+        locale={locale}
       >
         <Button asChild variant="gold" size="lg">
           <TrackedLink href={localePath(locale, 'contact')} event={{ event: 'cta_click', cta_id: 'service_hero_assessment', location: `service_${slug}` }}>

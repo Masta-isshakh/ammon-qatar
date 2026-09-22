@@ -44,6 +44,8 @@ export default async function ServicesPage({ params }: { params: Params }) {
         intro={page.intro}
         crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.services }]}
         crumbsLabel={site.common.breadcrumb}
+        image="corporateMeeting"
+        locale={locale}
       />
       <ServicesGrid locale={locale} services={services} copy={site.services} withHeading={false} id="all-services" />
       <RecoveryProcess locale={locale} steps={process} copy={site.process} tone="light" />

@@ -40,7 +40,7 @@ export default async function AboutPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd id="ld-about" data={schema} />
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.about }]} crumbsLabel={site.common.breadcrumb} />
+      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.about }]} crumbsLabel={site.common.breadcrumb} image="team" locale={locale} />
 
       <section className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
         <Reveal>
@@ -49,7 +49,7 @@ export default async function AboutPage({ params }: { params: Params }) {
           <p className="mt-6 text-pretty text-lead text-ink">{page.mission}</p>
         </Reveal>
         <Reveal className="overflow-hidden rounded-3xl border border-line shadow-card">
-          <SiteImage image="aboutOffice" locale={locale} className="aspect-[16/10] object-cover" loading="lazy" />
+          <SiteImage image="corporateMeeting" locale={locale} className="aspect-[16/9] object-cover" loading="lazy" />
         </Reveal>
       </section>
 

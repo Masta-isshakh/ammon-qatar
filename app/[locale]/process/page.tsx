@@ -36,7 +36,7 @@ export default async function ProcessPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd id="ld-process" data={schema} />
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.howItWorks }]} crumbsLabel={site.common.breadcrumb} />
+      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.howItWorks }]} crumbsLabel={site.common.breadcrumb} image="settlementMeeting" locale={locale} />
       <RecoveryProcess locale={locale} steps={process} copy={site.process} variant="full" outcomesLabel={page.outcomesLabel} tone="light" />
       <AmicableFirst copy={site.amicable} />
       <FAQAccordion locale={locale} eyebrow={site.faq.eyebrow} heading={site.faq.heading} items={processFaqs} services={services} relatedLabel={site.common.relatedService} id="process-faq" />

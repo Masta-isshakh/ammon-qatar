@@ -42,7 +42,7 @@ export function MobileStickyBar({ locale, labels, phoneHref, whatsappHref }: Mob
         <Link
           href={localePath(locale, 'contact')}
           onClick={() => track({ event: 'cta_click', cta_id: 'mobile_bar_assessment', location: 'mobile_bar' })}
-          className="flex min-h-11 items-center justify-center rounded-xl bg-primary-900 px-3 text-center text-sm font-bold leading-tight text-white shadow-[0_8px_20px_-12px_rgb(74_22_34/0.8)] active:bg-primary-800"
+          className="flex min-h-11 items-center justify-center rounded-xl bg-primary-900 px-3 text-center text-sm font-bold leading-tight text-white shadow-[0_8px_20px_-12px_rgb(0_28_85/0.8)] active:bg-primary-800"
         >
           {labels.assess}
         </Link>

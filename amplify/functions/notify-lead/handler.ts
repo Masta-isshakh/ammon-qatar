@@ -67,19 +67,19 @@ function buildEmail(row: LeadRow) {
   const rows = fields
     .map(
       ([k, v]) =>
-        `<tr><td style="padding:6px 12px;color:#6a5b5e;font-size:13px;white-space:nowrap;vertical-align:top">${escapeHtml(k)}</td>` +
-        `<td style="padding:6px 12px;font-size:14px;color:#1d1518">${escapeHtml(String(v))}</td></tr>`,
+        `<tr><td style="padding:6px 12px;color:#5a6478;font-size:13px;white-space:nowrap;vertical-align:top">${escapeHtml(k)}</td>` +
+        `<td style="padding:6px 12px;font-size:14px;color:#10182a">${escapeHtml(String(v))}</td></tr>`,
     )
     .join('');
   const html =
-    `<!doctype html><html><body style="margin:0;background:#faf7f0;font-family:Manrope,Arial,sans-serif">` +
-    `<div style="max-width:560px;margin:24px auto;background:#fff;border:1px solid #e2ddd0;border-radius:12px;overflow:hidden">` +
-    `<div style="background:#4a1622;padding:20px 24px;border-bottom:3px solid #c9a227">` +
-    `<h1 style="margin:0;font-size:18px;color:#d9b85a">Ammon Qatar — New case assessment request</h1></div>` +
+    `<!doctype html><html><body style="margin:0;background:#f9f8f5;font-family:Manrope,Arial,sans-serif">` +
+    `<div style="max-width:560px;margin:24px auto;background:#fff;border:1px solid #dfe3ea;border-radius:12px;overflow:hidden">` +
+    `<div style="background:#001c55;padding:20px 24px;border-bottom:3px solid #b8862b">` +
+    `<h1 style="margin:0;font-size:18px;color:#d3a852">Ammon Qatar — New case assessment request</h1></div>` +
     `<table style="border-collapse:collapse;width:100%;margin:12px 0">${rows}</table>` +
     `<div style="padding:16px 24px 24px">` +
-    `<a href="${waLink}" style="display:inline-block;background:#4a1622;color:#fff;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:999px">Open WhatsApp</a>` +
-    `<p style="color:#6a5b5e;font-size:12px;margin-top:16px">Sent automatically from ${escapeHtml(SITE_URL)}. Treat this message as confidential.</p>` +
+    `<a href="${waLink}" style="display:inline-block;background:#001c55;color:#fff;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:999px">Open WhatsApp</a>` +
+    `<p style="color:#5a6478;font-size:12px;margin-top:16px">Sent automatically from ${escapeHtml(SITE_URL)}. Treat this message as confidential.</p>` +
     `</div></div></body></html>`;
   return { subject, text, html };
 }

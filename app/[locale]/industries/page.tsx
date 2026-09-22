@@ -32,7 +32,7 @@ export default async function IndustriesPage({ params }: { params: Params }) {
   return (
     <>
       <JsonLd id="ld-industries" data={schema} />
-      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.industries }]} crumbsLabel={site.common.breadcrumb} />
+      <PageHeader eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} crumbs={[{ href: `/${locale}`, label: site.common.home }, { label: site.nav.industries }]} crumbsLabel={site.common.breadcrumb} image="constructionReceivables" locale={locale} />
       <IndustriesGrid locale={locale} industries={industries} services={services} copy={site.industries} variant="full" labels={{ challenges: page.challengesLabel, services: page.servicesLabel }} />
       <CTABand locale={locale} heading={site.common.ctaBandHeading} body={site.common.ctaBandBody} primary={site.common.requestAssessment} secondary={site.common.talkToTeam} location="industries" />
     </>

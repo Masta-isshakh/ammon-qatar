@@ -7,6 +7,14 @@ import { defineFunction } from '@aws-amplify/backend';
 export const notifyLead = defineFunction({
   name: 'notify-lead',
   entry: './handler.ts',
+  /*
+   * Place the function in the data stack. Its DynamoDB stream trigger is
+   * created alongside the Lead table (see amplify/backend.ts), so keeping the
+   * function in its own stack makes the data stack depend on the function
+   * stack and CloudFormation rejects the deployment with
+   * "circular dependency found between nested stacks [data, function]".
+   */
+  resourceGroupName: 'data',
   runtime: 20,
   timeoutSeconds: 30,
   memoryMB: 256,

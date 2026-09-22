@@ -7,31 +7,39 @@ import type { AnyImageKey } from '@/content/images';
 import type { Locale } from '@/lib/i18n/config';
 import { cn } from '@/lib/utils';
 
-interface HeroCarouselProps {
-  locale: Locale;
-  /** First entry is the default slide and is the LCP image. */
-  slides: AnyImageKey[];
+export interface HeroSlide {
+  image: AnyImageKey;
+  /** Short line shown with the slide indicator. */
   caption: string;
-  labels: { label: string; slide: string; pause: string; play: string };
 }
 
-const INTERVAL_MS = 6500;
+interface HeroCarouselProps {
+  locale: Locale;
+  /** First entry is the default slide and the LCP image. */
+  slides: HeroSlide[];
+  labels: { label: string; slide: string; pause: string; play: string };
+  children: React.ReactNode;
+}
+
+const INTERVAL_MS = 7000;
 
 /**
- * Cross-fading hero carousel.
+ * Full-bleed hero carousel: the photographs are the background, the hero copy
+ * sits on top of a gradient scrim.
  *
- * - Only `opacity` animates, so every frame is composited (no layout work).
- * - The first slide renders eagerly with `priority` and stays the LCP element.
- *   The remaining slides are not mounted until the browser is idle, so they
- *   never compete with the initial page load.
- * - Auto-rotation stops on hover, focus, tab-hide and prefers-reduced-motion,
- *   and there is an explicit pause control (WCAG 2.2.2).
+ * Performance / accessibility notes:
+ * - Only `opacity` and `transform` animate, so frames are GPU-composited and
+ *   nothing triggers layout. The section has a fixed min-height, so CLS is 0.
+ * - The first slide renders with `priority` and is the LCP element. The rest
+ *   are not mounted until the browser is idle, so they never compete with the
+ *   initial load.
+ * - Rotation stops on hover, focus, hidden tab and prefers-reduced-motion, and
+ *   there is an explicit pause control (WCAG 2.2.2).
  */
-export function HeroCarousel({ locale, slides, caption, labels }: HeroCarouselProps) {
+export function HeroCarousel({ locale, slides, labels, children }: HeroCarouselProps) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
-  /** Extra slides mount only once the page is loaded and the browser is idle. */
   const [ready, setReady] = useState(false);
   const hovering = useRef(false);
   const uid = useId();
@@ -44,6 +52,7 @@ export function HeroCarousel({ locale, slides, caption, labels }: HeroCarouselPr
     return () => mq.removeEventListener('change', apply);
   }, []);
 
+  // Mount the remaining slides only once the page has loaded and the browser is idle.
   useEffect(() => {
     let cancelled = false;
     const mount = () => {
@@ -78,11 +87,15 @@ export function HeroCarousel({ locale, slides, caption, labels }: HeroCarouselPr
     return () => window.clearInterval(id);
   }, [ready, paused, reduced, advance, slides.length]);
 
-  const label = (template: string, n: number) => template.replace('{n}', String(n)).replace('{total}', String(slides.length));
+  const label = (t: string, n: number) => t.replace('{n}', String(n)).replace('{total}', String(slides.length));
+  const show = (i: number) => {
+    setReady(true);
+    setIndex(i);
+  };
 
   return (
-    <figure
-      className="relative"
+    <section
+      className="hero-shell relative isolate flex min-h-[38rem] items-center overflow-hidden bg-primary-950 text-white lg:min-h-[44rem]"
       aria-roledescription="carousel"
       aria-label={labels.label}
       onMouseEnter={() => {
@@ -98,78 +111,81 @@ export function HeroCarousel({ locale, slides, caption, labels }: HeroCarouselPr
         hovering.current = false;
       }}
     >
-      <div aria-hidden className="absolute -inset-3 rounded-[1.75rem] border border-gold-500/30" />
-      <div className="relative overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(0_17_47/0.9)]">
-        {/* Aspect box keeps the height fixed so switching slides never shifts layout. */}
-        <div className="relative aspect-[4/3] w-full lg:aspect-[16/11]">
-          {slides.map((slide, i) =>
-            i > 0 && !ready ? null : (
+      {/* Background slides */}
+      <div className="absolute inset-0 -z-20">
+        {slides.map((slide, i) =>
+          i > 0 && !ready ? null : (
             <div
-              key={slide}
+              key={slide.image}
               id={`${uid}-slide-${i}`}
               role="group"
               aria-roledescription="slide"
+              aria-label={label(labels.slide, i + 1)}
               aria-hidden={i !== index}
               className={cn(
-                'absolute inset-0 transition-opacity duration-700 ease-[var(--ease-out-quart)] motion-reduce:transition-none',
+                'absolute inset-0 transition-opacity duration-[1200ms] ease-[var(--ease-out-quart)] motion-reduce:transition-none',
                 i === index ? 'opacity-100' : 'opacity-0',
               )}
             >
               <SiteImage
-                image={slide}
+                image={slide.image}
                 locale={locale}
                 priority={i === 0}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="size-full object-cover"
+                sizes="100vw"
+                className={cn('size-full object-cover', i === index && 'hero-kenburns')}
               />
             </div>
-            ),
-          )}
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-primary-950/75 via-primary-950/10 to-transparent" />
-        </div>
+          ),
+        )}
       </div>
 
-      <figcaption className="absolute bottom-5 start-5 end-5 flex items-end justify-between gap-4">
-        <span className="text-sm font-medium text-white/90">{caption}</span>
+      {/* Scrim: keeps the copy legible over any photograph, mirrored for RTL. */}
+      <div aria-hidden className="hero-scrim absolute inset-0 -z-10" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-primary-950 to-transparent" />
+
+      <div className="container-x relative w-full py-20 sm:py-24 lg:py-28">
+        <div className="max-w-2xl">{children}</div>
+
         {slides.length > 1 && (
-          <span className="flex shrink-0 items-center gap-2">
-            <span className="flex items-center gap-1.5">
-              {slides.map((slide, i) =>
-            i > 0 && !ready ? null : (
+          <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <span className="flex items-center gap-2">
+              {slides.map((slide, i) => (
                 <button
-                  key={slide}
+                  key={slide.image}
                   type="button"
                   aria-label={label(labels.slide, i + 1)}
                   aria-current={i === index}
                   aria-controls={`${uid}-slide-${i}`}
-                  onClick={() => {
-                    setReady(true);
-                    setIndex(i);
-                  }}
-                  className="group grid size-6 place-items-center"
+                  onClick={() => show(i)}
+                  className="group grid h-8 place-items-center px-0.5"
                 >
                   <span
                     className={cn(
-                      'block h-1.5 rounded-full transition-all duration-300',
-                      i === index ? 'w-6 bg-gold-400' : 'w-1.5 bg-white/55 group-hover:bg-white/85',
+                      'block h-1 rounded-full transition-all duration-500',
+                      i === index ? 'w-12 bg-gold-400' : 'w-5 bg-white/40 group-hover:bg-white/70',
                     )}
                   />
                 </button>
               ))}
             </span>
+
+            <p aria-live="polite" className="min-w-0 flex-1 text-sm text-white/70">
+              {slides[index].caption}
+            </p>
+
             {!reduced && (
               <button
                 type="button"
                 onClick={() => setPaused((p) => !p)}
                 aria-label={paused ? labels.play : labels.pause}
-                className="grid size-7 place-items-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                className="grid size-9 shrink-0 place-items-center rounded-full border border-white/25 text-white/80 transition-colors hover:border-white/50 hover:text-white"
               >
-                {paused ? <Play className="size-3.5" aria-hidden /> : <Pause className="size-3.5" aria-hidden />}
+                {paused ? <Play className="size-4" aria-hidden /> : <Pause className="size-4" aria-hidden />}
               </button>
             )}
-          </span>
+          </div>
         )}
-      </figcaption>
-    </figure>
+      </div>
+    </section>
   );
 }

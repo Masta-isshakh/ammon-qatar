@@ -3,14 +3,14 @@ export const site = {
     siteName: 'Ammon Qatar',
     titleTemplate: '%s | Ammon Qatar',
     home: {
-      title: 'Debt Collection & Recovery Support in Qatar | Ammon Qatar',
+      title: 'Debt Collection, Company Formation & PRO Services in Qatar | Ammon Qatar',
       description:
-        'Ammon Qatar provides professional, confidential debt collection and receivables recovery support in Doha, Qatar — early-stage collection, negotiation, settlements, payment monitoring and coordinated legal follow-up.',
+        'Ammon Qatar provides professional debt collection and receivables recovery, company formation and government transaction (PRO) support in Doha, Qatar. Request a confidential assessment.',
     },
-    ogDescription: 'Recover what you are owed — professionally, confidentially, and with a clear strategy.',
+    ogDescription: 'Recover what you are owed. Establish and run your business in Qatar with structured, confidential follow-up.',
   },
   utility: {
-    tagline: 'Confidential debt collection & receivables recovery — Doha, Qatar',
+    tagline: 'Debt collection · Company formation · Government transactions — Doha, Qatar',
     hours: 'Sun–Thu',
   },
   nav: {
@@ -34,15 +34,16 @@ export const site = {
     skip: 'Skip to main content',
   },
   hero: {
-    eyebrow: 'Debt Collection & Recovery Support in Qatar',
-    heading: 'Professional Debt Collection & Recovery Support in Qatar',
+    eyebrow: 'Debt Collection, Company Formation & PRO Services in Qatar',
+    heading: 'Recover What You Are Owed. Move Your Business Forward in Qatar.',
     subcopy:
-      'Ammon Qatar helps businesses and individuals manage overdue receivables through early-stage collection, professional debtor communication, structured negotiation, settlements, payment monitoring, and coordinated legal follow-up where required.',
+      'Ammon Qatar handles the work that needs consistent, professional follow-up in Qatar — overdue receivables, company formation and government transactions. One point of contact, a defined process and honest updates throughout.',
     primaryCta: 'Request a Confidential Case Assessment',
     secondaryCta: 'Talk to Our Team',
-    positioning: 'Recover What You’re Owed — Professionally, Confidentially, and With a Clear Strategy.',
+    positioning: 'Initial assessment · Confidential handling · No obligation to engage',
+    servicesLabel: 'We help with',
     slides: {
-      doha: 'Doha, Qatar — receivables recovery managed locally.',
+      doha: 'Doha, Qatar — receivables, company setup and government files, managed locally.',
       meeting: 'Every file starts with an honest assessment.',
       team: 'A bilingual team that handles your case discreetly.',
     },
@@ -69,8 +70,8 @@ export const site = {
     },
   },
   problem: {
-    heading: 'Overdue receivables shouldn’t consume your team’s time.',
-    body: 'Structured follow-up matters. Ammon Qatar manages the recovery process from early-stage contact and negotiation through settlement and monitoring, allowing your team to stay focused on its core business.',
+    heading: 'When receivables or transactions stall, the whole business feels it.',
+    body: 'An overdue invoice is not just a line on a statement, and a stalled transaction is not just a piece of paper. Each delay consumes your team’s time, pressures cash flow and postpones decisions. Our role is to turn the file into a structured process with a named owner, clear steps and regular updates.',
     timelineHeading: 'Receivables ageing timeline',
     timeline: [
       { label: 'Current', body: 'Invoice issued and within terms. Clear documentation now prevents disputes later.' },
@@ -82,11 +83,26 @@ export const site = {
       'Ageing bands are a planning guide, not a prediction of recovery outcomes. Each file is assessed on its own facts.',
   },
   services: {
-    eyebrow: 'Core services',
-    heading: 'Receivables recovery, end to end',
-    body: 'From the first reminder to a signed settlement, each service can be engaged on its own or as part of a managed recovery plan.',
+    eyebrow: 'What we do',
+    heading: 'Practical support for your receivables and your business operations',
+    body: 'Three areas of work, one point of contact: recovering what you are owed, establishing your company in Qatar, and keeping government paperwork moving.',
     viewAll: 'View all services',
     learnMore: 'Service details',
+    /** Grouping shown on the homepage and the services index. */
+    categories: {
+      debt: {
+        label: 'Debt Collection & Recovery',
+        body: 'Structured follow-up on overdue receivables, from the first reminder through negotiation, settlement and monitoring.',
+      },
+      formation: {
+        label: 'Company Formation',
+        body: 'Understand the setup route before you file, then have the registration and licensing steps coordinated for you.',
+      },
+      government: {
+        label: 'Government Transactions',
+        body: 'Registrations, renewals, documents and applications tracked and followed up so nothing expires unnoticed.',
+      },
+    },
   },
   difference: {
     eyebrow: 'The Ammon Qatar difference',
@@ -248,7 +264,7 @@ export const site = {
     howWeApproach: 'How we approach it',
     prepare: 'What to prepare',
     relatedServices: 'Related services',
-    ctaBandHeading: 'Ready to discuss an overdue account?',
+    ctaBandHeading: 'Have receivables or a transaction that needs following up?',
     ctaBandBody: 'Share a short summary and we will come back to you with a recommended approach.',
     step: 'Step',
     of: 'of',
@@ -280,13 +296,13 @@ export const site = {
         'Ammon Qatar operates as a registered company in the State of Qatar. Registration details are displayed in the footer once confirmed.',
     },
     services: {
-      title: 'Debt Collection Services in Qatar',
+      title: 'Our Services in Qatar',
       description:
-        'Corporate and individual debt collection, early-stage collection, unpaid invoice recovery, negotiation and settlement, bank and finance settlement support, payment monitoring and legal follow-up in Qatar.',
+        'Debt collection and receivables recovery, company formation and business setup, and government transaction (PRO) support in Qatar — delivered by Ammon Qatar from Doha.',
       eyebrow: 'Services',
-      heading: 'Debt collection and recovery services',
+      heading: 'Services for your receivables and your business',
       intro:
-        'Engage a single service or a fully managed recovery plan. Each service below explains who it is for, what it covers and what to prepare.',
+        'Engage a single service or a fully managed scope. Each service below explains who it is for, what it covers and what to prepare.',
     },
     industries: {
       title: 'Industries We Support',

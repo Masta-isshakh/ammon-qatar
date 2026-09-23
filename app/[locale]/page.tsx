@@ -1,7 +1,7 @@
 import { HomeHero } from '@/components/hero/HomeHero';
 import { TrustStrip } from '@/components/sections/TrustStrip';
 import { ProblemValue } from '@/components/sections/ProblemValue';
-import { ServicesGrid } from '@/components/services/ServicesGrid';
+import { ServicePillars } from '@/components/services/ServicePillars';
 import { Difference } from '@/components/sections/Difference';
 import { RecoveryProcess } from '@/components/process/RecoveryProcess';
 import { IndustriesGrid } from '@/components/industries/IndustriesGrid';
@@ -26,6 +26,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { site, services, industries, process, faqs, caseStudies, testimonials } = content;
   const homeFaqs = faqs.slice(0, 5);
 
+  // One link per pillar: straight to the service when a pillar holds only one,
+  // otherwise to its grouped section on the services index.
+  const heroServiceLinks = (['debt', 'formation', 'government'] as const).map((category) => {
+    const items = services.filter((s) => s.category === category);
+    return {
+      label: site.services.categories[category].label,
+      href: items.length === 1 ? localePath(locale, `services/${items[0].slug}`) : `${localePath(locale, 'services')}#${category}`,
+    };
+  });
+
   const schema = graph([
     organizationNode(locale),
     websiteNode(locale),
@@ -38,10 +48,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <>
       <JsonLd id="ld-home" data={schema} />
-      <HomeHero locale={locale} hero={site.hero} />
+      <HomeHero locale={locale} hero={site.hero} serviceLinks={heroServiceLinks} />
       <TrustStrip trust={site.trust} />
       <ProblemValue problem={site.problem} />
-      <ServicesGrid locale={locale} services={services} copy={site.services} />
+      <ServicePillars locale={locale} services={services} copy={site.services} />
       <Difference copy={site.difference} />
       <RecoveryProcess locale={locale} steps={process} copy={site.process} />
       <IndustriesGrid locale={locale} industries={industries} services={services} copy={site.industries} />

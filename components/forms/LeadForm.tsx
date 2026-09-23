@@ -12,11 +12,15 @@ import { localePath, type Locale } from '@/lib/i18n/config';
 import { cn } from '@/lib/utils';
 import {
   AMOUNT_RANGES,
+  COMPANY_TYPES,
   CONTACT_METHODS,
   DEBT_AGES,
   DEBT_CATEGORIES,
+  GOVERNMENT_TRANSACTIONS,
   LIMITS,
+  SERVICE_LINES,
   STEP_FIELDS,
+  TIMELINES,
   validateFields,
   type LeadErrors,
   type LeadField,
@@ -33,6 +37,7 @@ const FORM_ID = 'case_assessment';
 
 const initial = (locale: Locale, sourcePage: string): LeadInput => ({
   locale,
+  service: '',
   name: '',
   companyType: '',
   companyName: '',
@@ -41,6 +46,9 @@ const initial = (locale: Locale, sourcePage: string): LeadInput => ({
   debtCategory: '',
   amountRange: '',
   debtAge: '',
+  businessActivity: '',
+  governmentTransactionType: '',
+  timeline: '',
   preferredContact: '',
   message: '',
   consent: false,
@@ -268,25 +276,45 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
 
       <div className="mt-6 space-y-5">
         {step === 0 && (
+          <fieldset>
+            <legend className="sr-only">{copy.fields.service}</legend>
+            <div id={`${uid}-service`} role="radiogroup" className="grid gap-3 sm:grid-cols-3">
+              {SERVICE_LINES.map((v) => {
+                const active = data.service === v;
+                return (
+                  <label
+                    key={v}
+                    className={cn(
+                      'flex cursor-pointer flex-col gap-1 rounded-2xl border p-5 transition-colors',
+                      active ? 'border-primary-900 bg-primary-900 text-white' : 'border-line bg-white hover:border-primary-900/40',
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      name="service"
+                      value={v}
+                      checked={active}
+                      onChange={() => update('service', v)}
+                      className="sr-only"
+                    />
+                    <span className="font-bold">{copy.fields.serviceOptions[v].label}</span>
+                    <span className={cn('text-sm leading-relaxed', active ? 'text-white/75' : 'text-slate-muted')}>
+                      {copy.fields.serviceOptions[v].hint}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+            {errorText('service') && <p className="mt-2 text-sm text-red-700">{errorText('service')}</p>}
+          </fieldset>
+        )}
+
+        {step === 1 && (
           <>
-            <Field id={`${uid}-name`} label={copy.fields.name} error={errorText('name')}>
-              <input
-                id={`${uid}-name`}
-                name="name"
-                type="text"
-                autoComplete="name"
-                maxLength={LIMITS.name}
-                value={data.name}
-                onChange={(e) => update('name', e.target.value)}
-                aria-invalid={Boolean(errors.name)}
-                aria-describedby={errors.name ? `${uid}-name-error` : undefined}
-                className={fieldClass}
-              />
-            </Field>
             <fieldset>
               <legend className="mb-1.5 text-sm font-semibold text-primary-900">{copy.fields.companyType}</legend>
               <div id={`${uid}-companyType`} className="grid grid-cols-2 gap-2" role="radiogroup" aria-invalid={Boolean(errors.companyType)}>
-                {(['company', 'individual'] as const).map((opt) => (
+                {COMPANY_TYPES.map((opt) => (
                   <label
                     key={opt}
                     className={cn(
@@ -301,6 +329,123 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
               </div>
               {errorText('companyType') && <p className="mt-1.5 text-sm text-red-700">{errorText('companyType')}</p>}
             </fieldset>
+
+            {data.service === 'debt' && (
+              <>
+                <Field id={`${uid}-debtCategory`} label={copy.fields.debtCategory} error={errorText('debtCategory')}>
+                  <select {...selectProps('debtCategory', `${uid}-debtCategory`)} onChange={(e) => update('debtCategory', e.target.value as LeadInput['debtCategory'])}>
+                    <option value="">—</option>
+                    {DEBT_CATEGORIES.map((v) => (
+                      <option key={v} value={v}>
+                        {copy.fields.debtCategoryOptions[v]}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field id={`${uid}-amountRange`} label={copy.fields.amountRange} error={errorText('amountRange')}>
+                  <select {...selectProps('amountRange', `${uid}-amountRange`)} onChange={(e) => update('amountRange', e.target.value as LeadInput['amountRange'])}>
+                    <option value="">—</option>
+                    {AMOUNT_RANGES.map((v) => (
+                      <option key={v} value={v}>
+                        {copy.fields.amountRangeOptions[v]}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <fieldset>
+                  <legend className="mb-1.5 text-sm font-semibold text-primary-900">{copy.fields.debtAge}</legend>
+                  <div id={`${uid}-debtAge`} className="grid grid-cols-2 gap-2 sm:grid-cols-5" role="radiogroup">
+                    {DEBT_AGES.map((v) => (
+                      <label
+                        key={v}
+                        className={cn(
+                          'flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 text-center text-sm font-semibold transition-colors',
+                          data.debtAge === v ? 'border-primary-900 bg-primary-900 text-white' : 'border-line bg-white text-primary-900 hover:border-primary-900/40',
+                        )}
+                      >
+                        <input type="radio" name="debtAge" value={v} checked={data.debtAge === v} onChange={() => update('debtAge', v)} className="sr-only" />
+                        {copy.fields.debtAgeOptions[v]}
+                      </label>
+                    ))}
+                  </div>
+                  {errorText('debtAge') && <p className="mt-1.5 text-sm text-red-700">{errorText('debtAge')}</p>}
+                </fieldset>
+              </>
+            )}
+
+            {data.service === 'formation' && (
+              <Field id={`${uid}-businessActivity`} label={copy.fields.businessActivity} error={errorText('businessActivity')}>
+                <input
+                  id={`${uid}-businessActivity`}
+                  name="businessActivity"
+                  type="text"
+                  maxLength={LIMITS.activity}
+                  placeholder={copy.fields.businessActivityPlaceholder}
+                  value={data.businessActivity}
+                  onChange={(e) => update('businessActivity', e.target.value)}
+                  aria-invalid={Boolean(errors.businessActivity)}
+                  aria-describedby={errors.businessActivity ? `${uid}-businessActivity-error` : undefined}
+                  className={cn(fieldClass, errors.businessActivity && 'border-red-400/70')}
+                />
+              </Field>
+            )}
+
+            {data.service === 'government' && (
+              <Field id={`${uid}-governmentTransactionType`} label={copy.fields.governmentTransactionType} error={errorText('governmentTransactionType')}>
+                <select
+                  {...selectProps('governmentTransactionType', `${uid}-governmentTransactionType`)}
+                  onChange={(e) => update('governmentTransactionType', e.target.value as LeadInput['governmentTransactionType'])}
+                >
+                  <option value="">—</option>
+                  {GOVERNMENT_TRANSACTIONS.map((v) => (
+                    <option key={v} value={v}>
+                      {copy.fields.governmentTransactionOptions[v]}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            )}
+
+            {(data.service === 'formation' || data.service === 'government') && (
+              <fieldset>
+                <legend className="mb-1.5 text-sm font-semibold text-primary-900">{copy.fields.timeline}</legend>
+                <div id={`${uid}-timeline`} className="grid grid-cols-2 gap-2 sm:grid-cols-4" role="radiogroup">
+                  {TIMELINES.map((v) => (
+                    <label
+                      key={v}
+                      className={cn(
+                        'flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 text-center text-sm font-semibold transition-colors',
+                        data.timeline === v ? 'border-primary-900 bg-primary-900 text-white' : 'border-line bg-white text-primary-900 hover:border-primary-900/40',
+                      )}
+                    >
+                      <input type="radio" name="timeline" value={v} checked={data.timeline === v} onChange={() => update('timeline', v)} className="sr-only" />
+                      {copy.fields.timelineOptions[v]}
+                    </label>
+                  ))}
+                </div>
+                {errorText('timeline') && <p className="mt-1.5 text-sm text-red-700">{errorText('timeline')}</p>}
+              </fieldset>
+            )}
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <Field id={`${uid}-name`} label={copy.fields.name} error={errorText('name')}>
+              <input
+                id={`${uid}-name`}
+                name="name"
+                type="text"
+                autoComplete="name"
+                maxLength={LIMITS.name}
+                value={data.name}
+                onChange={(e) => update('name', e.target.value)}
+                aria-invalid={Boolean(errors.name)}
+                aria-describedby={errors.name ? `${uid}-name-error` : undefined}
+                className={cn(fieldClass, errors.name && 'border-red-400/70')}
+              />
+            </Field>
+
             {data.companyType === 'company' && (
               <Field id={`${uid}-companyName`} label={copy.fields.companyName} error={errorText('companyName')}>
                 <input
@@ -313,10 +458,11 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
                   onChange={(e) => update('companyName', e.target.value)}
                   aria-invalid={Boolean(errors.companyName)}
                   aria-describedby={errors.companyName ? `${uid}-companyName-error` : undefined}
-                  className={fieldClass}
+                  className={cn(fieldClass, errors.companyName && 'border-red-400/70')}
                 />
               </Field>
             )}
+
             <div className="grid gap-5 sm:grid-cols-2">
               <Field id={`${uid}-phone`} label={copy.fields.phone} error={errorText('phone')}>
                 <input
@@ -331,7 +477,7 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
                   onChange={(e) => update('phone', e.target.value)}
                   aria-invalid={Boolean(errors.phone)}
                   aria-describedby={errors.phone ? `${uid}-phone-error` : undefined}
-                  className={cn(fieldClass, 'text-start')}
+                  className={cn(fieldClass, 'text-start', errors.phone && 'border-red-400/70')}
                 />
               </Field>
               <Field id={`${uid}-email`} label={copy.fields.email} error={errorText('email')}>
@@ -347,58 +493,11 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
                   onChange={(e) => update('email', e.target.value)}
                   aria-invalid={Boolean(errors.email)}
                   aria-describedby={errors.email ? `${uid}-email-error` : undefined}
-                  className={cn(fieldClass, 'text-start')}
+                  className={cn(fieldClass, 'text-start', errors.email && 'border-red-400/70')}
                 />
               </Field>
             </div>
-          </>
-        )}
 
-        {step === 1 && (
-          <>
-            <Field id={`${uid}-debtCategory`} label={copy.fields.debtCategory} error={errorText('debtCategory')}>
-              <select {...selectProps('debtCategory', `${uid}-debtCategory`)} onChange={(e) => update('debtCategory', e.target.value as LeadInput['debtCategory'])}>
-                <option value="">—</option>
-                {DEBT_CATEGORIES.map((v) => (
-                  <option key={v} value={v}>
-                    {copy.fields.debtCategoryOptions[v]}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field id={`${uid}-amountRange`} label={copy.fields.amountRange} error={errorText('amountRange')}>
-              <select {...selectProps('amountRange', `${uid}-amountRange`)} onChange={(e) => update('amountRange', e.target.value as LeadInput['amountRange'])}>
-                <option value="">—</option>
-                {AMOUNT_RANGES.map((v) => (
-                  <option key={v} value={v}>
-                    {copy.fields.amountRangeOptions[v]}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <fieldset>
-              <legend className="mb-1.5 text-sm font-semibold text-primary-900">{copy.fields.debtAge}</legend>
-              <div id={`${uid}-debtAge`} className="grid grid-cols-2 gap-2 sm:grid-cols-5" role="radiogroup">
-                {DEBT_AGES.map((v) => (
-                  <label
-                    key={v}
-                    className={cn(
-                      'flex min-h-12 cursor-pointer items-center justify-center rounded-xl border px-2 text-center text-sm font-semibold transition-colors',
-                      data.debtAge === v ? 'border-primary-900 bg-primary-900 text-white' : 'border-line bg-white text-primary-900 hover:border-primary-900/40',
-                    )}
-                  >
-                    <input type="radio" name="debtAge" value={v} checked={data.debtAge === v} onChange={() => update('debtAge', v)} className="sr-only" />
-                    {copy.fields.debtAgeOptions[v]}
-                  </label>
-                ))}
-              </div>
-              {errorText('debtAge') && <p className="mt-1.5 text-sm text-red-700">{errorText('debtAge')}</p>}
-            </fieldset>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
             <fieldset>
               <legend className="mb-1.5 text-sm font-semibold text-primary-900">{copy.fields.preferredContact}</legend>
               <div id={`${uid}-preferredContact`} className="grid grid-cols-3 gap-2" role="radiogroup">
@@ -417,6 +516,7 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
               </div>
               {errorText('preferredContact') && <p className="mt-1.5 text-sm text-red-700">{errorText('preferredContact')}</p>}
             </fieldset>
+
             <Field id={`${uid}-message`} label={copy.fields.message} error={errorText('message')} hint={copy.privacyNote}>
               <textarea
                 id={`${uid}-message`}
@@ -431,6 +531,7 @@ export function LeadForm({ locale, copy, whatsappHref }: LeadFormProps) {
                 className={cn(fieldClass, 'min-h-28 resize-y')}
               />
             </Field>
+
             <div>
               <label htmlFor={`${uid}-consent`} className="flex cursor-pointer items-start gap-3 text-sm text-ink">
                 <input

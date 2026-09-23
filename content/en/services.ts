@@ -9,6 +9,7 @@ import type { Service } from '../types';
 export const services: Service[] = [
   {
     slug: 'corporate-debt-collection',
+    category: 'debt',
     icon: 'building',
     name: 'Corporate Debt Collection',
     shortName: 'Corporate',
@@ -71,6 +72,7 @@ export const services: Service[] = [
   },
   {
     slug: 'individual-debt-collection',
+    category: 'debt',
     icon: 'user',
     name: 'Individual Debt Collection',
     shortName: 'Individual',
@@ -127,6 +129,7 @@ export const services: Service[] = [
   },
   {
     slug: 'early-stage-debt-collection',
+    category: 'debt',
     icon: 'clock',
     name: 'Early-Stage Collection',
     shortName: 'Early-stage',
@@ -182,6 +185,7 @@ export const services: Service[] = [
   },
   {
     slug: 'unpaid-invoice-recovery',
+    category: 'debt',
     icon: 'file-text',
     name: 'Unpaid Invoice Recovery',
     shortName: 'Invoices',
@@ -237,6 +241,7 @@ export const services: Service[] = [
   },
   {
     slug: 'negotiation-settlement',
+    category: 'debt',
     icon: 'handshake',
     name: 'Negotiation & Settlement',
     shortName: 'Settlement',
@@ -291,6 +296,7 @@ export const services: Service[] = [
   },
   {
     slug: 'bank-finance-settlements',
+    category: 'debt',
     icon: 'landmark',
     name: 'Bank & Finance Settlement Support',
     shortName: 'Bank & finance',
@@ -346,6 +352,7 @@ export const services: Service[] = [
   },
   {
     slug: 'payment-monitoring',
+    category: 'debt',
     icon: 'chart',
     name: 'Payment Monitoring',
     shortName: 'Monitoring',
@@ -396,6 +403,7 @@ export const services: Service[] = [
   },
   {
     slug: 'legal-follow-up',
+    category: 'debt',
     icon: 'scale',
     name: 'Legal Follow-Up',
     shortName: 'Legal follow-up',
@@ -448,5 +456,159 @@ export const services: Service[] = [
     relatedServices: ['negotiation-settlement', 'corporate-debt-collection', 'unpaid-invoice-recovery'],
     relatedInsights: ['amicable-settlement-versus-escalation-what-to-consider', 'documents-to-prepare-for-debt-collection-in-qatar'],
     note: 'Ammon Qatar is not a law firm. Legal proceedings, where required, are conducted by licensed legal professionals. TODO(owner): confirm and finalise this wording.',
+  },
+  {
+    slug: 'company-formation',
+    category: 'formation',
+    icon: 'briefcase',
+    name: 'Company Formation',
+    shortName: 'Company formation',
+    summary:
+      'Setting up in Qatar involves decisions about structure, activity and licensing. We help you see the route clearly before you file, then coordinate the steps.',
+    seo: {
+      title: 'Company Formation Qatar | Business Setup in Doha',
+      description:
+        'Company formation and business setup support in Qatar, including commercial registration, trade licensing, document coordination and ongoing PRO support with Ammon Qatar.',
+    },
+    hero: {
+      eyebrow: 'Business setup',
+      heading: 'Build your company in Qatar on a clearer foundation',
+      intro:
+        'A successful setup starts with the right structure, activity and documentation. Ammon Qatar helps you understand the route before filing, then coordinates the steps required to move from a business idea to an operating company.',
+    },
+    audience: [
+      'Founders establishing a first company in Qatar',
+      'Foreign companies opening a branch or subsidiary',
+      'Existing businesses adding or changing a licensed activity',
+      'Partners who need the setup route explained before committing',
+    ],
+    scope: [
+      'Review of the intended activity and commercial requirements',
+      'Explanation of the structure options available for that activity',
+      'Trade name reservation and document coordination',
+      'Follow-up on commercial registration and trade licence requirements',
+      'Coordination with the relevant authorities for the agreed scope',
+      'Post-incorporation PRO support, renewals and later amendments',
+      'Residence and visa steps where they fall within the agreed scope',
+    ],
+    approach: [
+      {
+        title: 'Understand',
+        body: 'We start with the activity you intend to carry out, who the partners are and the timeline you are working to.',
+      },
+      {
+        title: 'Map the route',
+        body: 'You receive the structure options, the documents each one needs and the sequence of approvals before anything is filed.',
+      },
+      {
+        title: 'Coordinate',
+        body: 'Name reservation, documents, registration and licensing are tracked as one workflow with a named point of contact.',
+      },
+      {
+        title: 'Hand over',
+        body: 'Once the company is operating we can continue with renewals, amendments and day-to-day PRO support.',
+      },
+    ],
+    preparation: [
+      'The business activity you intend to licence',
+      'Passport or ID copies for each partner',
+      'Preferred trade names, in order of preference',
+      'Shareholding split and intended management structure',
+      'Expected number of employees and target start date',
+    ],
+    faqs: [
+      {
+        q: 'How long does it take to set up a company in Qatar?',
+        a: 'It depends on the activity, the structure and the approvals each authority requires. We give you a realistic sequence for your specific case after the assessment rather than quoting a fixed timeline before knowing the activity.',
+      },
+      {
+        q: 'Can a foreign investor own the company fully?',
+        a: 'Foreign ownership levels depend on the activity and the rules that apply to it. We confirm what applies to your intended activity rather than giving a blanket answer.',
+      },
+      {
+        q: 'What is the difference between commercial registration and a trade licence?',
+        a: 'The commercial registration establishes the company as a legal entity; the trade licence permits it to carry out its activity from its premises. Most businesses need both, and they are obtained in sequence.',
+      },
+    ],
+    relatedServices: ['government-transactions', 'corporate-debt-collection'],
+    relatedInsights: ['documents-to-prepare-for-debt-collection-in-qatar'],
+    note: 'Ownership levels, approvals and timelines depend on the licensed activity and the rules in force at the time of filing. Ammon Qatar does not guarantee approval or a fixed processing time.',
+  },
+  {
+    slug: 'government-transactions',
+    category: 'government',
+    icon: 'stamp',
+    name: 'Government Transactions (PRO)',
+    shortName: 'PRO services',
+    summary:
+      'Keep registrations, renewals, documents and applications moving without pulling your team away from running the business.',
+    seo: {
+      title: 'PRO Services Qatar | Government Transaction Support',
+      description:
+        'PRO services and government transaction follow-up in Qatar: company registrations, renewals, document attestation, labour and immigration files coordinated by Ammon Qatar in Doha.',
+    },
+    hero: {
+      eyebrow: 'Government liaison',
+      heading: 'PRO and government transaction support in Qatar',
+      intro:
+        'Your team should not spend hours working out where a transaction stands or when a document expires. Ammon Qatar organises and follows up the government-facing procedures for your company and its staff, within the agreed scope.',
+    },
+    audience: [
+      'Companies without a dedicated PRO or government-relations officer',
+      'Businesses with renewals and expiries that keep slipping',
+      'HR and admin teams handling staff documentation',
+      'Newly formed companies setting up their first filings',
+    ],
+    scope: [
+      'Commercial registration and licence transactions',
+      'Renewals, amendments and cancellations',
+      'Labour and recruitment files within the agreed scope',
+      'Visa and residence procedures where they form part of the service',
+      'Document attestation and follow-up with the relevant authorities',
+      'Corporate and administrative filings',
+      'Expiry and renewal reminders, with clear status updates',
+    ],
+    approach: [
+      {
+        title: 'Register the file',
+        body: 'We record what the transaction is, which authority handles it and any deadline attached to it.',
+      },
+      {
+        title: 'Prepare',
+        body: 'Documents are checked against the requirements before submission, so the file is not returned for a missing page.',
+      },
+      {
+        title: 'Follow up',
+        body: 'We track the transaction through to completion and tell you where it stands rather than waiting to be asked.',
+      },
+      {
+        title: 'Stay ahead',
+        body: 'Expiry dates are logged so renewals start before they become urgent.',
+      },
+    ],
+    preparation: [
+      'The transaction type and the authority concerned, if known',
+      'Company commercial registration and licence details',
+      'Any deadline or expiry date that applies',
+      'Copies of the documents already issued',
+      'The name of the person authorised to sign on behalf of the company',
+    ],
+    faqs: [
+      {
+        q: 'Which government transactions can you handle?',
+        a: 'Company registration and licensing transactions, renewals and amendments, labour and immigration files, attestation and administrative filings. The exact scope is agreed in writing before we start, as some transactions require the signature or presence of an authorised signatory.',
+      },
+      {
+        q: 'Can you guarantee a transaction will be approved?',
+        a: 'No. Approvals and processing times are decided by the relevant authority. What we control is that the file is complete, submitted correctly and followed up consistently.',
+      },
+      {
+        q: 'Do you handle ongoing renewals or only one-off transactions?',
+        a: 'Both. Many clients engage us on a continuing basis so registrations, licences and staff documents are tracked and renewed before they expire.',
+      },
+    ],
+    relatedServices: ['company-formation', 'payment-monitoring'],
+    relatedInsights: ['credit-control-checklist-to-reduce-invoice-ageing'],
+    note: 'Ammon Qatar coordinates and follows up transactions on the client behalf within an agreed, written scope. Approval and processing times are determined by the relevant authority.',
   },
 ];

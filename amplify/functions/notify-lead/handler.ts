@@ -21,9 +21,13 @@ interface LeadRow {
   companyName?: string;
   phone: string;
   email: string;
-  debtCategory: string;
-  amountRange: string;
-  debtAge: string;
+  service: string;
+  debtCategory?: string;
+  amountRange?: string;
+  debtAge?: string;
+  businessActivity?: string;
+  governmentTransactionType?: string;
+  timeline?: string;
   preferredContact: string;
   message?: string;
   sourcePage?: string;
@@ -52,9 +56,13 @@ function buildEmail(row: LeadRow) {
     ['Phone', row.phone],
     ['Email', row.email],
     ['Preferred contact', row.preferredContact],
-    ['Receivable type', row.debtCategory],
-    ['Amount range', row.amountRange],
-    ['Age of debt', row.debtAge],
+    ['Service', row.service],
+    ['Receivable type', row.debtCategory ?? '—'],
+    ['Amount range', row.amountRange ?? '—'],
+    ['Age of debt', row.debtAge ?? '—'],
+    ['Business activity', row.businessActivity ?? '—'],
+    ['Transaction type', row.governmentTransactionType ?? '—'],
+    ['Timeline', row.timeline ?? '—'],
     ['Message', row.message ?? '—'],
     ['Language', row.locale ?? '—'],
     ['Source page', row.sourcePage ?? '—'],
@@ -62,7 +70,7 @@ function buildEmail(row: LeadRow) {
     ['Submitted', row.submittedAt ?? new Date().toISOString()],
   ];
 
-  const subject = `New case assessment request ${row.reference} — ${row.debtCategory} (${row.amountRange})`;
+  const subject = `New ${row.service} enquiry ${row.reference} — ${row.name}`;
   const text = fields.map(([k, v]) => `${k}: ${v}`).join('\n') + `\n\nWhatsApp: ${waLink}`;
   const rows = fields
     .map(

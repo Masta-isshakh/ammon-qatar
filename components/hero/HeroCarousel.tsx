@@ -157,7 +157,7 @@ export function HeroCarousel({ locale, slides, labels, children }: HeroCarouselP
       <div aria-hidden className="hero-scrim absolute inset-0 -z-10" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-primary-950 to-transparent" />
 
-      <div className="container-x relative py-14 sm:py-16 lg:py-20">
+      <div className="container-x relative py-12 sm:py-14 lg:py-16">
         <div className="max-w-xl lg:max-w-3xl">{children}</div>
 
         {slides.length > 1 && (

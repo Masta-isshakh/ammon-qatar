@@ -24,9 +24,13 @@ export interface LeadRecord {
   companyName?: string;
   phone: string;
   email: string;
-  debtCategory: string;
-  amountRange: string;
-  debtAge: string;
+  service: string;
+  debtCategory?: string;
+  amountRange?: string;
+  debtAge?: string;
+  businessActivity?: string;
+  governmentTransactionType?: string;
+  timeline?: string;
   preferredContact: string;
   message?: string;
   sourcePage?: string;
@@ -57,9 +61,13 @@ export function toLeadRecord(input: LeadInput, reference: string): LeadRecord {
     companyName: input.companyType === 'company' ? input.companyName.trim() : undefined,
     phone: input.phone.trim(),
     email: input.email.trim().toLowerCase(),
-    debtCategory: input.debtCategory,
-    amountRange: input.amountRange,
-    debtAge: input.debtAge,
+    service: input.service,
+    debtCategory: input.debtCategory || undefined,
+    amountRange: input.amountRange || undefined,
+    debtAge: input.debtAge || undefined,
+    businessActivity: input.businessActivity.trim() || undefined,
+    governmentTransactionType: input.governmentTransactionType || undefined,
+    timeline: input.timeline || undefined,
     preferredContact: input.preferredContact,
     message: input.message.trim() || undefined,
     sourcePage: input.sourcePage || undefined,

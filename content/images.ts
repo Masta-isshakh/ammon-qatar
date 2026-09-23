@@ -161,12 +161,14 @@ export type ExtraImageKey = keyof typeof EXTRA_IMAGES;
  * Optional hero photograph per service page. Services without an entry render
  * a text-only header, which keeps those pages fast and avoids a generic image.
  */
-export const SERVICE_IMAGES: Partial<Record<ServiceSlug, ExtraImageKey>> = {
+export const SERVICE_IMAGES: Partial<Record<ServiceSlug, ImageKey | ExtraImageKey>> = {
   'corporate-debt-collection': 'corporateMeeting',
   'early-stage-debt-collection': 'earlyStageCall',
   'negotiation-settlement': 'settlementMeeting',
   'bank-finance-settlements': 'bankSettlement',
   'payment-monitoring': 'paymentDashboard',
+  'company-formation': 'team',
+  'government-transactions': 'contactReception',
   'legal-follow-up': 'confidentialFile',
 };
 

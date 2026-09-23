@@ -4,6 +4,12 @@
  * one file per locale without touching components.
  */
 
+/**
+ * The three pillars Ammon Qatar operates. Services are grouped by these on the
+ * homepage and the services index so the offering reads clearly.
+ */
+export type ServiceCategory = 'debt' | 'formation' | 'government';
+
 export type ServiceSlug =
   | 'corporate-debt-collection'
   | 'individual-debt-collection'
@@ -12,7 +18,9 @@ export type ServiceSlug =
   | 'bank-finance-settlements'
   | 'negotiation-settlement'
   | 'payment-monitoring'
-  | 'legal-follow-up';
+  | 'legal-follow-up'
+  | 'company-formation'
+  | 'government-transactions';
 
 export type ServiceIcon =
   | 'building'
@@ -22,7 +30,9 @@ export type ServiceIcon =
   | 'landmark'
   | 'handshake'
   | 'chart'
-  | 'scale';
+  | 'scale'
+  | 'briefcase'
+  | 'stamp';
 
 export interface SeoFields {
   title: string;
@@ -31,6 +41,7 @@ export interface SeoFields {
 
 export interface Service {
   slug: ServiceSlug;
+  category: ServiceCategory;
   icon: ServiceIcon;
   name: string;
   shortName: string;

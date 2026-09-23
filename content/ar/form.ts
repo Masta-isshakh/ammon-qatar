@@ -1,13 +1,19 @@
 import type { FormContent } from '../en/form';
 
 export const form: FormContent = {
-  steps: ['بياناتك', 'المستحق', 'طريقة التواصل'],
+  steps: ['ما الذي تحتاجه', 'تفاصيل طلبك', 'بياناتك'],
   stepLabel: 'الخطوة',
   next: 'متابعة',
   back: 'رجوع',
-  submit: 'إرسال طلب تقييم الملف',
+  submit: 'إرسال طلب التقييم',
   submitting: 'جارٍ الإرسال…',
   fields: {
+    service: 'بماذا يمكننا مساعدتك؟',
+    serviceOptions: {
+      debt: { label: 'تحصيل الديون', hint: 'فواتير متأخرة أو مستحقات أو مبالغ مستحقة لك' },
+      formation: { label: 'تأسيس الشركات', hint: 'تأسيس شركة في قطر أو إعادة هيكلتها' },
+      government: { label: 'تعقيب المعاملات', hint: 'التسجيلات والتجديدات والمستندات ومعاملات الجهات الحكومية' },
+    },
     name: 'الاسم الكامل',
     companyType: 'أتقدم بالطلب بصفتي',
     companyTypeOptions: { company: 'شركة', individual: 'فرداً' },
@@ -40,6 +46,24 @@ export const form: FormContent = {
       '90_180': '90 – 180 يوماً',
       over_180: 'أكثر من 180 يوماً',
     },
+    businessActivity: 'النشاط التجاري الذي تنوي ترخيصه',
+    businessActivityPlaceholder: 'مثال: تجارة مواد البناء، استشارات تقنية المعلومات، مقاولات',
+    governmentTransactionType: 'نوع المعاملة',
+    governmentTransactionOptions: {
+      registration_licence: 'سجل تجاري أو رخصة تجارية',
+      renewal_amendment: 'تجديد أو تعديل أو إلغاء',
+      labour_recruitment: 'ملف عمالة أو استقدام',
+      visa_residence: 'إجراءات تأشيرة أو إقامة',
+      attestation: 'تصديق مستندات',
+      other: 'أخرى',
+    },
+    timeline: 'متى تحتاج إنجاز ذلك؟',
+    timelineOptions: {
+      urgent: 'عاجل — هناك موعد نهائي',
+      within_month: 'خلال شهر',
+      within_quarter: 'خلال ثلاثة أشهر',
+      exploring: 'ما زلت أستكشف الخيارات',
+    },
     preferredContact: 'طريقة التواصل المفضلة',
     preferredContactOptions: { phone: 'الهاتف', whatsapp: 'واتساب', email: 'البريد الإلكتروني' },
     message: 'وصف مختصر (اختياري)',
@@ -56,6 +80,7 @@ export const form: FormContent = {
     phone: 'يرجى إدخال رقم هاتف صحيح، مثل ‎+974 5XXX XXXX.',
     email: 'يرجى إدخال بريد إلكتروني صحيح.',
     select: 'يرجى اختيار أحد الخيارات.',
+    activity: 'يرجى وصف النشاط بكلمات قليلة.',
     message: 'يرجى ألا يتجاوز الوصف 1,000 حرف.',
     consent: 'يرجى تأكيد موافقتك على التواصل معك.',
     rateLimited: 'عدد كبير من الطلبات من هذا الاتصال. يرجى المحاولة بعد دقائق أو التواصل معنا مباشرة.',
@@ -63,7 +88,7 @@ export const form: FormContent = {
   },
   success: {
     heading: 'تم استلام طلبك',
-    body: 'شكراً لك. تم تسجيل طلب تقييم الملف وسيتواصل معك أحد أعضاء الفريق بالطريقة التي فضّلتها.',
+    body: 'شكراً لك. تم تسجيل طلبك وسيتواصل معك أحد أعضاء الفريق بالطريقة التي فضّلتها.',
     reference: 'رقمك المرجعي',
     next: 'ماذا يحدث بعد ذلك',
     steps: ['نراجع ملخصك وأي نواقص واضحة.', 'نتواصل معك لتأكيد التفاصيل وطلب المستندات اللازمة فقط.', 'تستلم تقييماً مكتوباً والأسلوب الذي نوصي به.'],

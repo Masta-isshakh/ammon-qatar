@@ -75,6 +75,21 @@ export const faqs: FaqItem[] = [
     service: 'legal-follow-up',
   },
   {
+    q: 'Which services does Ammon Qatar provide?',
+    a: 'Three areas of work: debt collection and receivables recovery, company formation and business setup in Qatar, and government transaction (PRO) support such as registrations, renewals, documents and labour or residence files.',
+    service: 'company-formation',
+  },
+  {
+    q: 'Can you form a company and then handle its government transactions?',
+    a: 'Yes. Many clients engage us for the setup and then continue with us for renewals, licence amendments and staff documentation, so the same team already knows the file.',
+    service: 'government-transactions',
+  },
+  {
+    q: 'Do you guarantee that a company registration or transaction will be approved?',
+    a: 'No. Approvals, ownership levels and processing times are decided by the relevant authority under the rules in force at the time. What we commit to is a complete, correctly prepared file, consistent follow-up and honest updates.',
+    service: 'company-formation',
+  },
+  {
     q: 'Is my information confidential?',
     a: 'Yes. Files are handled on a need-to-know basis, stored in access-controlled systems and shared only with those working on your file or, with your agreement, professionals engaged on your behalf.',
   },

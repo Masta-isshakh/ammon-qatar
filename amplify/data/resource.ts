@@ -23,9 +23,19 @@ const schema = a.schema({
       companyName: a.string(),
       phone: a.string().required(),
       email: a.string().required(),
-      debtCategory: a.string().required(),
-      amountRange: a.string().required(),
-      debtAge: a.string().required(),
+      /** Which line of work the enquiry is about: debt | formation | government. */
+      service: a.string().required(),
+      // Debt-collection enquiries only, so these are optional at the model level
+      // and enforced conditionally by lib/validation/lead.ts.
+      debtCategory: a.string(),
+      amountRange: a.string(),
+      debtAge: a.string(),
+      // Company formation
+      businessActivity: a.string(),
+      // Government transactions
+      governmentTransactionType: a.string(),
+      /** Target start date (formation) or deadline (government transactions). */
+      timeline: a.string(),
       preferredContact: a.string().required(),
       message: a.string(),
       sourcePage: a.string(),

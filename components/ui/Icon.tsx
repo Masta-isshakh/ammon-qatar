@@ -1,11 +1,13 @@
 import {
   BarChart3,
+  Briefcase,
   Building2,
   Clock,
   FileText,
   Handshake,
   Landmark,
   Scale,
+  Stamp,
   UserRound,
   type LucideProps,
 } from 'lucide-react';
@@ -20,6 +22,8 @@ const MAP: Record<ServiceIcon, React.ComponentType<LucideProps>> = {
   handshake: Handshake,
   chart: BarChart3,
   scale: Scale,
+  briefcase: Briefcase,
+  stamp: Stamp,
 };
 
 export function ServiceIconGlyph({ name, className }: { name: ServiceIcon; className?: string }) {

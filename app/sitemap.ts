@@ -37,5 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(FLAGS.showDohaPage ? entries('doha', 0.7, 'monthly') : []),
     ...entries('privacy', 0.2, 'yearly'),
     ...entries('terms', 0.2, 'yearly'),
+    ...entries('data-deletion', 0.2, 'yearly'),
   ];
 }

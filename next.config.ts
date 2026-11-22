@@ -29,6 +29,14 @@ const nextConfig: NextConfig = {
     // Tree-shake icon/animation barrels so client chunks stay tiny.
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  async redirects() {
+    // Common legal-page aliases (e.g. as typed into the Meta developer console) → canonical routes.
+    // Un-prefixed paths reach these via the locale redirect in middleware.ts.
+    return [
+      { source: '/:locale(en|ar)/privacy-policy', destination: '/:locale/privacy', permanent: true },
+      { source: '/:locale(en|ar)/terms-of-service', destination: '/:locale/terms', permanent: true },
+    ];
+  },
   async headers() {
     return [
       { source: '/(.*)', headers: securityHeaders },

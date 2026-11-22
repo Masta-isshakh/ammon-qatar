@@ -146,6 +146,47 @@ export interface CaseStudy {
   anonymized: boolean;
 }
 
+/**
+ * One section of a legal page (privacy, terms, data deletion).
+ * Inline tokens in any string: `{email}` → mailto link to the company email,
+ * `{company}` → registered legal name for the locale, `[label](/path)` →
+ * locale-prefixed internal link, `[label](https://…)` → external link.
+ */
+export interface LegalSection {
+  heading: string;
+  /** Paragraphs rendered in order. */
+  body: string[];
+  /** Optional bulleted list rendered after `body`. */
+  bullets?: string[];
+  /** Optional numbered steps rendered after `bullets`. */
+  steps?: string[];
+  /** Optional paragraphs rendered after the lists. */
+  after?: string[];
+}
+
+/** Prominent email-request card (used on the data deletion page). */
+export interface LegalRequestCard {
+  heading: string;
+  body: string;
+  button: string;
+  /** Shown under the button for visitors without a mail client. */
+  fallback: string;
+  subject: string;
+  /** Pre-filled email body; `\n` separates lines. */
+  template: string;
+}
+
+export interface LegalPageContent {
+  title: string;
+  description: string;
+  heading: string;
+  updated: string;
+  /** Lead paragraph rendered above the sections. */
+  intro?: string;
+  request?: LegalRequestCard;
+  sections: LegalSection[];
+}
+
 export interface Testimonial {
   id: string;
   quote: string;

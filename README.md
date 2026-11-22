@@ -26,7 +26,8 @@ Scripts: `dev`, `build`, `start`, `lint`, `typecheck`, `clean` (clears stale `.n
 
 ```text
 app/[locale]/                 pages: home, about, services(+8), industries, process, case-studies,
-                              insights(+articles), faq, contact, doha, privacy, terms, 404, OG image
+                              insights(+articles), faq, contact, doha, privacy, terms, data-deletion,
+                              404, OG image
 app/actions/submit-lead.ts    server action: honeypot → rate limit → validation → Amplify write
 content/en, content/ar        ALL copy, services, industries, process, FAQs, articles, form strings
 content/images.ts             image slots (path, intrinsic size, alt per locale)
@@ -101,6 +102,7 @@ What keeps it fast:
 - Team profiles (About page section is hidden until provided).
 - Case studies and testimonials — only with written client permission.
 - A vector (SVG/AI) version of the logo when available — the current assets are generated from the supplied PNG.
-- Legal review of Privacy Policy, Terms of Use and the footer disclaimer (`NEXT_PUBLIC_SHOW_LEGAL_DISCLAIMER`).
+- Legal review of Privacy Policy, Terms of Service, Data Deletion Instructions and the footer disclaimer (`NEXT_PUBLIC_SHOW_LEGAL_DISCLAIMER`).
+  These three pages are the URLs registered for the Meta app (App Settings → Basic); keep `{email}` monitored.
 - Which trust credentials may be displayed (`NEXT_PUBLIC_VERIFIED_CREDENTIALS`).
 - Article author/reviewer names (`author` field in `content/*/insights.ts`).

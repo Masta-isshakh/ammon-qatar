@@ -155,6 +155,11 @@ export function SiteFooter({ locale, content }: SiteFooterProps) {
                 {f.terms}
               </Link>
             </li>
+            <li>
+              <Link href={localePath(locale, 'data-deletion')} className="hover:text-white">
+                {f.dataDeletion}
+              </Link>
+            </li>
           </ul>
         </div>
         {FLAGS.showLegalDisclaimer && (

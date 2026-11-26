@@ -6,7 +6,7 @@ import { buildMetadata } from '@/lib/seo/metadata';
 
 export const revalidate = 3600;
 type Params = Promise<{ locale: string }>;
-const REVIEWED_AT = '2026-11-22'; // TODO(legal): update after review.
+const REVIEWED_AT = '2026-11-26'; // TODO(legal): update after review.
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale: raw } = await params;

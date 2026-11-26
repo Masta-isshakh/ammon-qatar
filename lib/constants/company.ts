@@ -81,6 +81,15 @@ export const FLAGS = {
 
 export const GTM_ID = env('NEXT_PUBLIC_GTM_ID', '');
 
+/**
+ * Google Analytics 4 measurement ID for the Google tag (gtag.js), loaded in <head> on every page.
+ * Validated because it is interpolated into an inline script. An empty value falls back to the
+ * default (see env()), so set it to "off" to disable the tag.
+ * Keep the "Cookies and analytics" section of the privacy policy in sync with this.
+ */
+const gaId = env('NEXT_PUBLIC_GA_MEASUREMENT_ID', 'G-Z0CQ9SB3Q2');
+export const GA_MEASUREMENT_ID = /^G-[A-Z0-9]{4,20}$/.test(gaId) ? gaId : '';
+
 /** Human-readable phone for display; falls back to E.164 spacing. */
 export function formatPhoneDisplay(e164: string = COMPANY.phoneE164) {
   const digits = e164.replace(/\D/g, '');

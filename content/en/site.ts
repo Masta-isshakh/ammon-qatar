@@ -443,10 +443,26 @@ export const site = {
           ],
         },
         {
+          // TODO(owner): the TikTok integration is not part of this repository; keep this section in
+          // line with the tool that actually holds the TikTok tokens.
+          heading: 'TikTok',
+          body: [
+            'Ammon Qatar connects its own TikTok account through TikTok Login Kit and the TikTok Content Posting API so that we can publish our own videos and photos to that account.',
+          ],
+          bullets: [
+            'Data we receive: only the connected account’s basic profile — its open ID, display name and avatar.',
+            'How we use it: only to publish our own videos and photos to that account.',
+            'How we protect it: the access tokens issued by TikTok are stored encrypted. We never sell or share this data or these tokens.',
+            'Revoking access: access can be revoked at any time in TikTok’s settings, by removing our app from the account’s connected apps, or by emailing {email}.',
+            'Deletion: when the account is disconnected, its profile data and tokens are deleted.',
+          ],
+        },
+        {
           heading: 'Cookies and analytics',
           body: [
             'We use one first-party cookie, NEXT_LOCALE, to remember whether you prefer English or Arabic. It contains only the language code, expires after one year, and is not used for tracking or advertising.',
-            'We do not use advertising cookies. If we enable website analytics (for example through Google Tag Manager), it records only general usage events — such as pages viewed, buttons clicked and form steps completed — and never your name, phone number, email address or message content. The analytics provider may set its own cookies, which you can block or delete in your browser settings.',
+            'We use Google Analytics (the Google tag, gtag.js) to understand how the website is used. It sets first-party cookies (such as _ga and _ga_<ID>) and collects usage information such as pages viewed, how you arrived at the site, device and browser type, and approximate location (city or region). We never send your name, phone number, email address or message content to Google Analytics. Google processes this data as described in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites). You can block or delete these cookies in your browser settings, or install the [Google Analytics opt-out browser add-on](https://tools.google.com/dlpage/gaoptout).',
+            'We do not use advertising cookies.',
             'Links to Google Maps, WhatsApp, Instagram or Facebook take you to those services, which apply their own cookies and privacy policies.',
           ],
         },
@@ -455,7 +471,7 @@ export const site = {
           body: ['We share personal information only as needed for the purposes above:'],
           bullets: [
             'Our team: staff and authorised personnel who handle your enquiry or file, under confidentiality obligations.',
-            'Service providers that operate our systems on our behalf: Amazon Web Services (AWS) for website hosting, enquiry storage, and sending and receiving email. Data centres used for these services may be located outside the State of Qatar.',
+            'Service providers that operate our systems on our behalf: Amazon Web Services (AWS) for website hosting, enquiry storage, and sending and receiving email, and Google for website analytics. Data centres used for these services may be located outside the State of Qatar.',
             'Licensed professionals: where progressing your matter requires it and you agree, lawyers or other licensed professionals engaged on your behalf.',
             'Authorities: where required by law, a court order or a competent authority, or to protect our rights, our clients or the public.',
           ],

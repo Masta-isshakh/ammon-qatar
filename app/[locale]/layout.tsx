@@ -4,8 +4,9 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { MobileStickyBar } from '@/components/navigation/MobileStickyBar';
+import { GoogleTagFallback } from '@/components/seo/GoogleTagFallback';
 import { getContent } from '@/content';
-import { COMPANY, GTM_ID, whatsappLink } from '@/lib/constants/company';
+import { COMPANY, GA_MEASUREMENT_ID, GTM_ID, whatsappLink } from '@/lib/constants/company';
 import { LOCALES, LOCALE_META, isLocale, type Locale } from '@/lib/i18n/config';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { fontClassName } from '@/lib/fonts';
@@ -56,6 +57,19 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={meta.hreflang} dir={meta.dir} className={`js ${fontClassName(locale)}`}>
       <head>
+        {/* Google tag (gtag.js): Google's standard snippet, server-rendered in <head> once per page (EN + AR).
+            React 19 dedupes the async script, so client-side navigation never adds a second copy. */}
+        {GA_MEASUREMENT_ID ? (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+            <script
+              id="google-tag"
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
+              }}
+            />
+          </>
+        ) : null}
         {/* Without JS the noscript rules override the pre-reveal states, so content is never hidden. */}
         <noscript>
           <style>{`.reveal,.reveal-child,.gold-line,.process-track{opacity:1!important;transform:none!important;animation:none!important}`}</style>
@@ -75,6 +89,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         </main>
         <SiteFooter locale={locale} content={content} />
         <MobileStickyBar locale={locale} labels={content.site.mobileBar} phoneHref={`tel:${COMPANY.phoneE164}`} whatsappHref={waHref} />
+        {GA_MEASUREMENT_ID ? <GoogleTagFallback measurementId={GA_MEASUREMENT_ID} /> : null}
       </body>
     </html>
   );
